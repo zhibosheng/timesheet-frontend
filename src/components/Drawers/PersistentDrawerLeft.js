@@ -18,7 +18,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
+import Container from '../Container/SimpleContainer';
 
 const drawerWidth = 240;
 
