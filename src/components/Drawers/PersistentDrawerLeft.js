@@ -19,7 +19,8 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Button from '@material-ui/core/Button';
 import Container from '../Container/SimpleContainer';
-import { ProgressPlugin } from 'webpack';
+
+
 
 const drawerWidth = 240;
 

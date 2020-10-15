@@ -1,10 +1,9 @@
 import React from 'react';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import './App.css';
 import Layout from './hoc/Layout/Layout';
 import Auth from './containers/Auth/Auth';
 import Register from './containers/Auth/Register';
-
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 const App = props => {
 
   let routes = (
@@ -14,6 +13,7 @@ const App = props => {
         <Redirect to="/auth" />
     </Switch>
   );
+
   return (
     <div>
       <Layout>{routes}</Layout>
