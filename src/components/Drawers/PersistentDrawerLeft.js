@@ -19,6 +19,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Button from '@material-ui/core/Button';
 import Container from '../Container/SimpleContainer';
+import { ProgressPlugin } from 'webpack';
 
 const drawerWidth = 240;
 
@@ -104,7 +105,7 @@ export default function PersistentDrawerLeft() {
         <Toolbar>
           <IconButton
             color="inherit"
-            aria-label="open drawer"
+            aria-label="open drawer"           
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
@@ -138,7 +139,7 @@ export default function PersistentDrawerLeft() {
           <ListItem button key={"Contract"}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
             <ListItemText primary={"Contract"} />
-          </ListItem>Container
+          </ListItem>
           <ListItem button key={"Timesheet"}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
             <ListItemText primary={"Timesheet"} />
@@ -169,8 +170,6 @@ export default function PersistentDrawerLeft() {
           [classes.contentShift]: open,
         })}
       >
-        <div className={classes.drawerHeader} />
-        <Container maxWidth="sm"></Container>
       </main>
     </div>
   );
