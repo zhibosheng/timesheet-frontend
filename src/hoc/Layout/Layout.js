@@ -7,7 +7,8 @@ const layout = props => {
 
     return (
         <Fragment>
-            <PersistentDrawerLeft/>
+            <PersistentDrawerLeft name={props.name}/>
+            {props.name}
             {props.children}
         </Fragment>
     );
