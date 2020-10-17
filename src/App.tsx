@@ -21,20 +21,20 @@ const App = (props:any) => {
     </Switch>
   );
   
-  if(true) {
-    routes = (
-      <Switch>
-        <Route path="/contract" render={props => <Contract  {...props} />} />
-        <Route path="/timesheet" render={props => <Timesheet   {...props} />} />
-        <Route path="/group" render={props => <Group  {...props} />} />
-        <Route path="/HR" render={props => <HR  {...props} />} />
-        <Route path="/profile" render={props => <Profile  {...props} />} />
-        <Route path="/setting" render={props => <Setting  {...props} />} />
-        <Route path="/home" exact component={Home} />
-        <Route path="/" exact component={Home} />
-      </Switch>
-    );
-  }
+  // if(true) {
+  //   routes = (
+  //     <Switch>
+  //       <Route path="/contract" render={props => <Contract  {...props} />} />
+  //       <Route path="/timesheet" render={props => <Timesheet   {...props} />} />
+  //       <Route path="/group" render={props => <Group  {...props} />} />
+  //       <Route path="/HR" render={props => <HR  {...props} />} />
+  //       <Route path="/profile" render={props => <Profile  {...props} />} />
+  //       <Route path="/setting" render={props => <Setting  {...props} />} />
+  //       <Route path="/home" exact component={Home} />
+  //       <Route path="/" exact component={Home} />
+  //     </Switch>
+  //   );
+  // }
 
   return (
     <div>

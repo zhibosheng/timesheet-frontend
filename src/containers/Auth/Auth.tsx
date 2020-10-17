@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import SignInForm from '../../components/Auth/SignInForm';
 const Auth = (props:any) => {
-    return (<p>Auth</p>);
+    return <SignInForm />;
 }
 
 export default Auth;
