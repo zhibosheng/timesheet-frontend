@@ -1,41 +1,32 @@
-Name
-Uncontrolled
-
-Placeholder
-
-Age *
-Required
-
-Age
-
-Age
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  }),
+);
 
 export default function NativeSelects() {
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [state, setState] = React.useState<{ age: string | number; name: string }>({
     age: '',
     name: 'hai',
   });
 
-  const handleChange = (event) => {
-    const name = event.target.name;
+  const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+    const name = event.target.name as keyof typeof state;
     setState({
       ...state,
       [name]: event.target.value,

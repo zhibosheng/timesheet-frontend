@@ -3,15 +3,15 @@ import { Fragment } from "react";
 import PersistentDrawerLeft from "../../components/Drawers/PersistentDrawerLeft";
 
 
-const layout = props => {
+const Layout = (props:any) => {
 
     return (
         <Fragment>
-            <PersistentDrawerLeft name={props.name}/>
-            {props.name}
+            <PersistentDrawerLeft />
+
             {props.children}
         </Fragment>
     );
 };
 
-export default layout;
+export default Layout;

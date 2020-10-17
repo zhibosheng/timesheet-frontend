@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-const Timesheet = props => {
+const Timesheet = (props:any) => {
     return (<p>Timesheet</p>);
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-const Contract = props => {
+const Contract = (props:any) => {
     return (<p>Contract</p>);
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-const Setting = props => {
+const Setting = (props:any) => {
     return (<p>Setting</p>);
 }
 

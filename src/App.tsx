@@ -11,7 +11,7 @@ import HR from './containers/HR/HR';
 import Profile from './containers/Profile/Profile';
 import Setting from './containers/Setting/Setting';
 import Group from './containers/Group/Group';
-const App = props => {
+const App = (props:any) => {
 
   let routes = (
     <Switch>

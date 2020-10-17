@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 
-const initialState = {
+const initialState:Object= {
     token: null,
     userId: null,
     error: null,
@@ -9,11 +9,11 @@ const initialState = {
     authRedirectPath: '/'
 };
 
-const authStart = ( state, action ) => {
+const authStart = ( state:any, action:any) => {
     return updateObject( state, { error: null, loading: true } );
 };
 
-const authSuccess = (state, action) => {
+const authSuccess = (state:any, action:any) => {
     return updateObject( state, { 
         token: action.idToken,
         userId: action.userId,
@@ -22,22 +22,22 @@ const authSuccess = (state, action) => {
      } );
 };
 
-const authFail = (state, action) => {
+const authFail = (state:any, action:any) => {
     return updateObject( state, {
         error: action.error,
         loading: false
     });
 };
 
-const authLogout = (state, action) => {
+const authLogout = (state:any, action:any) => {
     return updateObject(state, { token: null, userId: null });
 };
 
-const setAuthRedirectPath = (state, action) => {
+const setAuthRedirectPath = (state:any, action:any) => {
     return updateObject(state, { authRedirectPath: action.path })
 }
 
-const reducer = ( state = initialState, action ) => {
+const reducer = ( state:any = initialState, action:any ) => {
     switch ( action.type ) {
         case actionTypes.AUTH_START: return authStart(state, action);
         case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);

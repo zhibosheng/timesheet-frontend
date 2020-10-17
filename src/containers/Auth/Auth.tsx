@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-const Auth = props => {
+const Auth = (props:any) => {
     return (<p>Auth</p>);
 }
 
