@@ -3,7 +3,6 @@ import { updateObject } from '../../shared/utility';
 
 const initialState: Object= {
     token: null,
-    userId: null,
     error: null,
     loading: false,
     authRedirectPath: '/'
@@ -15,8 +14,7 @@ const authStart = ( state:any, action:any) => {
 
 const authSuccess = (state:any, action:any) => {
     return updateObject( state, { 
-        token: action.idToken,
-        userId: action.userId,
+        Authorization: action.Authorization,
         error: null,
         loading: false
      } );

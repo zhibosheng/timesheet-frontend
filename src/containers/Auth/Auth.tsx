@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import React, { useState, useEffect, Fragment } from 'react';
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import {Button} from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 
 import * as actions from '../../store/actions/auth';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const Auth = (props:any) => {
+const Auth = (props: any) => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
@@ -28,7 +28,7 @@ const Auth = (props:any) => {
         props.onAuth(userName, password);
     }
 
-    return (
+    let form = (
         <form className={classes.root} noValidate autoComplete="off">
             <div>
                 <TextField
@@ -37,7 +37,7 @@ const Auth = (props:any) => {
                     label="UserName"
                     defaultValue=""
                     variant="outlined"
-                    onChange={(event) => {setUserName(event.target.value);}}
+                    onChange={(event) => { setUserName(event.target.value); }}
                 />
                 <TextField
                     id="outlined-password-input"
@@ -59,6 +59,16 @@ const Auth = (props:any) => {
                 onClick={(event) => submitHandler(event)}>
                 Sign Up</Button>
         </form>
+    );
+
+    if (props.loading){
+        form = <CircularProgress />
+    }
+
+    return (
+        <Fragment>
+            {form}
+        </Fragment>
     );
 }
 
