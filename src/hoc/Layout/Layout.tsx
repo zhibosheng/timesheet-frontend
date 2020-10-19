@@ -1,17 +1,23 @@
 import React from 'react';
 import { Fragment } from "react";
 import PersistentDrawerLeft from "../../components/Drawers/PersistentDrawerLeft";
+import { connect } from 'react-redux';
 
 
 const Layout = (props:any) => {
 
     return (
         <Fragment>
-            <PersistentDrawerLeft />
-
+            <PersistentDrawerLeft 
+                isAuth={props.isAuthenticated}
+            />
             {props.children}
         </Fragment>
     );
 };
-
-export default Layout;
+const mapStateToProps = (state:any) => {
+    return {
+      isAuthenticated: state.auth.Authorization !== null
+    };
+};
+export default connect(mapStateToProps)(Layout);

@@ -2,13 +2,16 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 import { getUserByName } from './user';
 
+
+
+
 export const authStart = () => {
     return {
         type: actionTypes.AUTH_START
     };
 };
 
-export const authSuccess = (Authorization:String) => {
+export const authSuccess = (Authorization:string) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         Authorization: Authorization,
@@ -23,7 +26,7 @@ export const authFail = (error:any) => {
 };
 
 export const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('Authorization');
     localStorage.removeItem('expirationDate');
     return {
         type: actionTypes.AUTH_LOGOUT
@@ -39,10 +42,10 @@ export const checkAuthTimeout = (expirationTime:number) => {
 };
 
 
-export const auth = (userName:String, password:String) => {
+export const auth = (userName:string, password:string) => {
     return (dispatch:any) => {
         dispatch(authStart());
-        const authData:Object = {
+        const Data:Object = {
             userName: userName,
             password: password,
         };
@@ -51,12 +54,11 @@ export const auth = (userName:String, password:String) => {
         }
          
         const url:string = "http://localhost:8080/auth";
-        axios.post(url, authData,config)
+        axios.post(url, Data,config)
         .then(response => {
-            // chech expire date
-            const expirationDate:Date = new Date(new Date().getTime() + 30 * 1000);
+            // check expire date
+            const expirationDate:Date = new Date(new Date().getTime() + 7200 * 1000);
             localStorage.setItem('Authorization', response.data.Authorization);
-            alert(response.data.Authorization);
             localStorage.setItem('expirationDate', expirationDate.toString());
             dispatch(authSuccess(response.data.Authorization));
             dispatch(checkAuthTimeout(30));

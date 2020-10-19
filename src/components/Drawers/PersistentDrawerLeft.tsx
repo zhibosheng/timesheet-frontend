@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function PersistentDrawerLeft() {
+export default function PersistentDrawerLeft(props: any) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -91,7 +91,57 @@ export default function PersistentDrawerLeft() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  let lists = (
+    <Fragment>
+      <ListItem button key={"Auth"}>
+        <ListItemIcon><InboxIcon /></ListItemIcon>
+        <ListItemText primary={"Auth"} />
+      </ListItem>
+      <ListItem button key={"Register"}>
+        <ListItemIcon><InboxIcon /></ListItemIcon>
+        <ListItemText primary={"Register"} />
+      </ListItem>
+    </Fragment>
+  );
+  if (props.isAuth) {
+    lists = (
+      <Fragment>
+        <List>
+          <ListItem button key={"Home"}>
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary={"Home"} />
+          </ListItem>
+          <ListItem button key={"Contract"}>
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary={"Contract"} />
+          </ListItem>
+          <ListItem button key={"Timesheet"}>
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary={"Timesheet"} />
+          </ListItem>
+          <ListItem button key={"Group"}>
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary={"Group"} />
+          </ListItem>
+          <ListItem button key={"HR Dashboard"}>
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary={"HR Dashboard"} />
+          </ListItem>
+          <ListItem button key={"Profile"}>
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary={"Profile"} />
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem button key={"Setting"}>
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary={"Setting"} />
+          </ListItem>
+        </List>
+      </Fragment>
+    );
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -131,39 +181,7 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </div>
         <Divider />
-        <List>
-            <ListItem button key={"Home"}>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={"Home"} />
-            </ListItem>
-            <ListItem button key={"Contract"}>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={"Contract"} />
-            </ListItem>
-            <ListItem button key={"Timesheet"}>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={"Timesheet"} />
-            </ListItem>
-            <ListItem button key={"Group"}>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={"Group"} />
-            </ListItem>
-            <ListItem button key={"HR Dashboard"}>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={"HR Dashboard"} />
-            </ListItem>
-            <ListItem button key={"Profile"}>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={"Profile"} />
-            </ListItem>
-        </List>
-        <Divider />
-        <List>
-          <ListItem button key={"Setting"}>
-            <ListItemIcon><InboxIcon /></ListItemIcon>
-            <ListItemText primary={"Setting"} />
-          </ListItem>
-        </List>
+        {lists}
       </Drawer>
       <main
         className={clsx(classes.content, {

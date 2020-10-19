@@ -11,6 +11,7 @@ import HR from './containers/HR/HR';
 import Profile from './containers/Profile/Profile';
 import Setting from './containers/Setting/Setting';
 import Group from './containers/Group/Group';
+import { connect } from 'react-redux';
 const App = (props:any) => {
 
   let routes = (
@@ -21,20 +22,22 @@ const App = (props:any) => {
     </Switch>
   );
   
-  // if(true) {
-  //   routes = (
-  //     <Switch>
-  //       <Route path="/contract" render={props => <Contract  {...props} />} />
-  //       <Route path="/timesheet" render={props => <Timesheet   {...props} />} />
-  //       <Route path="/group" render={props => <Group  {...props} />} />
-  //       <Route path="/HR" render={props => <HR  {...props} />} />
-  //       <Route path="/profile" render={props => <Profile  {...props} />} />
-  //       <Route path="/setting" render={props => <Setting  {...props} />} />
-  //       <Route path="/home" exact component={Home} />
-  //       <Route path="/" exact component={Home} />
-  //     </Switch>
-  //   );
-  // }
+  if(props.isAuthenticated) {
+    routes = (
+      <Switch>
+        <Route path="/contract" render={props => <Contract  {...props} />} />
+        <Route path="/timesheet" render={props => <Timesheet   {...props} />} />
+        <Route path="/group" render={props => <Group  {...props} />} />
+        <Route path="/HR" render={props => <HR  {...props} />} />
+        <Route path="/profile" render={props => <Profile  {...props} />} />
+        <Route path="/setting" render={props => <Setting  {...props} />} />
+        <Route path="/home" exact component={Home} />
+        <Route path="/auth" exact component={Auth} />
+        <Route path="/register" exact component={Register} />
+        <Route path="/" exact component={Home} />
+      </Switch>
+    );
+  }
 
   return (
     <div>
@@ -42,5 +45,9 @@ const App = (props:any) => {
     </div>
   );
 }
-
-export default withRouter(App);
+const mapStateToProps = (state:any) => {
+  return {
+    isAuthenticated: state.auth.token !== null
+  };
+};
+export default withRouter(connect(mapStateToProps)(App));
