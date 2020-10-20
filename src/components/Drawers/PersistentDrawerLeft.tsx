@@ -117,34 +117,51 @@ export default function PersistentDrawerLeft(props: any) {
         <List>
           <ListItem button key={"Home"}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
-            <ListItemText primary={"Home"} />
+            <NavLink 
+            to={"/home"}
+            exact={true}
+        ><ListItemText primary={"Home"} />
+        </NavLink>
           </ListItem>
           <ListItem button key={"Contract"}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
-            <ListItemText primary={"Contract"} />
+            <NavLink 
+            to={"/contract"}
+        ><ListItemText primary={"Contract"} />
+        </NavLink>
           </ListItem>
           <ListItem button key={"Timesheet"}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
-            <ListItemText primary={"Timesheet"} />
+            <NavLink 
+            to={"/timesheet"}
+        ><ListItemText primary={"Timesheet"} /></NavLink>
           </ListItem>
           <ListItem button key={"Group"}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
-            <ListItemText primary={"Group"} />
+            <NavLink 
+            to={"/group"}
+        ><ListItemText primary={"Group"} /></NavLink>
           </ListItem>
           <ListItem button key={"HR Dashboard"}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
-            <ListItemText primary={"HR Dashboard"} />
+            <NavLink 
+            to={"/HR"}
+        ><ListItemText primary={"HR Dashboard"} /></NavLink>
           </ListItem>
           <ListItem button key={"Profile"}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
-            <ListItemText primary={"Profile"} />
+            <NavLink 
+            to={"/profile"}
+        ><ListItemText primary={"Profile"} /></NavLink>
           </ListItem>
         </List>
         <Divider />
         <List>
           <ListItem button key={"Setting"}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
-            <ListItemText primary={"Setting"} />
+            <NavLink 
+            to={"/setting"}
+        ><ListItemText primary={"Setting"} /></NavLink>
           </ListItem>
         </List>
       </Fragment>
@@ -170,7 +187,7 @@ export default function PersistentDrawerLeft(props: any) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Persistent drawer
+            Timesheet
           </Typography>
         </Toolbar>
       </AppBar>
