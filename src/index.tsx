@@ -4,38 +4,38 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-
-import {createStore, applyMiddleware, compose, combineReducers} from "redux";
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
+import authReducer from './store/reducers/auth';
+import registerReducer from './store/reducers/register';
+import userReducer from './store/reducers/user';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
-import authReducer from './store/reducers/auth'
-
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 declare global {
-    interface Window {
-        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    }
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose : null || compose;
 
-const rootRecuder = combineReducers({
-    auth: authReducer
+const rootReducer = combineReducers({
+  auth: authReducer,
+  register: registerReducer,
+  user: userReducer,
 });
 
-const store = createStore(rootRecuder, composeEnhancers(
-    applyMiddleware(thunk)
+const store = createStore(rootReducer, composeEnhancers(
+  applyMiddleware(thunk)
 ));
-
 const app = (
   <React.StrictMode>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>
-  </React.StrictMode> 
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
 );
 ReactDOM.render(app, document.getElementById('root'));
 

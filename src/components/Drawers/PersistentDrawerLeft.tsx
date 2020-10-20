@@ -17,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -95,11 +96,18 @@ export default function PersistentDrawerLeft(props: any) {
     <Fragment>
       <ListItem button key={"Auth"}>
         <ListItemIcon><InboxIcon /></ListItemIcon>
-        <ListItemText primary={"Auth"} />
+        <NavLink 
+            to={"auth"}
+            exact={true}
+        ><ListItemText primary={"Auth"} />
+        </NavLink>
       </ListItem>
       <ListItem button key={"Register"}>
         <ListItemIcon><InboxIcon /></ListItemIcon>
-        <ListItemText primary={"Register"} />
+        <NavLink 
+            to={"register"}
+            exact={true}
+        ><ListItemText primary={"Register"} /></NavLink>
       </ListItem>
     </Fragment>
   );
