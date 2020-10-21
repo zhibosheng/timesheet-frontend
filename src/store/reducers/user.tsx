@@ -10,6 +10,7 @@ const initialState: Object= {
     email: null,
     phone: null,
     avatarUrl: null,
+    avatar:null,
     createTime: null,
     updateTime: null,
     error: null,
@@ -32,6 +33,16 @@ const fetchUserSuccess = (state:any, action:any) => {
         avatarUrl: action.avatarUrl,
         createTime: action.createTime,
         updateTime: action.updateTime,
+        error: null,
+        loading: false
+    });
+};
+
+const fetchUserAvatarSuccess = (state:any, action:any) => {
+    return updateObject( state, {
+        avatar: action.avatar,
+        error: null,
+        loading: false
     });
 };
 
@@ -47,6 +58,7 @@ const reducer = ( state:any = initialState, action:any ) => {
     switch ( action.type ) {
         case actionTypes.FETCH_USER_START: return fetchUserStart(state, action);
         case actionTypes.FETCH_USER_SUCCESS: return fetchUserSuccess(state, action);
+        case actionTypes.FETCH_USER_AVATAR_SUCCESS: return fetchUserAvatarSuccess(state, action);
         case actionTypes.FETCH_USER_FAIL: return fetchUserFail(state, action);
         default:
             return state;

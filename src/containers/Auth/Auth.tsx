@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import Alert from '@material-ui/lab/Alert';
 import CustomizedSnackbars from '../../components/Snackbars/CustomizedSnackbar';
 import { Severity } from '../../shared/type';
+import { Redirect, useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,6 +28,7 @@ const Auth = (props: any) => {
     const [open, setOpen] = useState(false);
     const [severity, setSeverity] = useState<Severity>(undefined);
     const [text, setText] = useState("")
+    const history = useHistory();
 
     const classes = useStyles();
 
@@ -35,7 +37,7 @@ const Auth = (props: any) => {
           return;
         }  
         setOpen(false);
-      };
+    };
 
     const submitHandler = (event: React.MouseEvent) => {
         event.preventDefault();
@@ -80,7 +82,7 @@ const Auth = (props: any) => {
             <Button
                 variant="contained"
                 color="secondary"
-                onClick={(event) => submitHandler(event)}>
+                onClick={() => history.push("/register")}>
                 Sign Up
             </Button>
         </form>

@@ -18,6 +18,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { NavLink } from 'react-router-dom';
+import { Avatar } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -189,6 +190,7 @@ export default function PersistentDrawerLeft(props: any) {
           <Typography variant="h6" noWrap>
             Timesheet
           </Typography>
+          <Avatar alt="User Avatar" src={props.avatar} />
         </Toolbar>
       </AppBar>
       <Drawer

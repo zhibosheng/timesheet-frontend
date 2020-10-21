@@ -10,6 +10,7 @@ const Layout = (props:any) => {
         <Fragment>
             <PersistentDrawerLeft 
                 isAuth={props.isAuthenticated}
+                avatar={props.avatar}
             />
             {props.children}
         </Fragment>
@@ -17,7 +18,8 @@ const Layout = (props:any) => {
 };
 const mapStateToProps = (state:any) => {
     return {
-      isAuthenticated: state.auth.Authorization !== null
+      isAuthenticated: state.auth.Authorization !== null,
+      avatar: state.user.avatar
     };
 };
 export default connect(mapStateToProps)(Layout);

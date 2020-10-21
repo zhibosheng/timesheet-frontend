@@ -7,6 +7,7 @@ import * as actions from '../../store/actions/register';
 import { register } from '../../serviceWorker';
 import { Severity } from '../../shared/type';
 import CustomizedSnackbars from '../../components/Snackbars/CustomizedSnackbar';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -30,6 +31,8 @@ const Register = (props:any) => {
     const [severity, setSeverity] = useState<Severity>(undefined);
     const [text, setText] = useState("")
 
+    const history = useHistory();
+    
     const classes = useStyles();
 
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -113,7 +116,7 @@ const Register = (props:any) => {
             <Button
                 variant="contained"
                 color="secondary"
-                onClick={(event) => submitHandler(event)}>
+                onClick={() => history.push("/auth")}>
                 Sign In
             </Button>
         </form>
