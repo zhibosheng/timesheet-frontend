@@ -1,7 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 import {auth} from './auth';
-import { getUserByName } from './user';
 
 export const registerStart = () => {
     return {

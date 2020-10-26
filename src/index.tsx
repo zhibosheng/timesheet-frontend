@@ -19,11 +19,13 @@ declare global {
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose : null || compose;
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   auth: authReducer,
   register: registerReducer,
   user: userReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>
 
 const store = createStore(rootReducer, composeEnhancers(
   applyMiddleware(thunk)

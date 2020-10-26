@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
-import { getUserByName } from './user';
+import { fetchUserByName } from './user';
 
 
 
@@ -62,7 +62,7 @@ export const auth = (userName:string, password:string) => {
             localStorage.setItem('expirationDate', expirationDate.toString());
             dispatch(authSuccess(response.data.Authorization));
             dispatch(checkAuthTimeout(7200));
-            dispatch(getUserByName(userName));           
+            dispatch(fetchUserByName(userName));           
         })
         .catch(err => {
             dispatch(authFail(err.message));
