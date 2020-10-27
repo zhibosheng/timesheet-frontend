@@ -116,6 +116,52 @@ export const updateUserInformation = (userId:number, userName: string, firstName
     }
 }
 
+export const updateUserPassword = (userId:number, oldPassword:string, newPassword:string) => {
+    return (dispatch:any) => {
+        dispatch(fetchUserStart());
+        const url:string = "http://localhost:8080/user/changePassword/" + userId + "/" + oldPassword + "/" + newPassword ;
+        axios.get(url)
+        .then(response => {
+            dispatch(fetchUserSuccess(response.data.userId,response.data.userName,
+                response.data.firstName, response.data.lastName, response.data.password,
+                response.data.email, response.data.phone, response.data.avatarUrl,
+                response.data.createTime, response.data.updateTime));            
+        })
+        .catch(err => {
+            dispatch(fetchUserFail(err.message));
+        });
+    }
+}
+
+export const updateUserAvatar = (userId: number, selectedFile:string ) => {
+    return (dispatch:any) => {
+        dispatch(fetchUserStart());
+        const url:string = "http://localhost:8080/user/avatar/" + userId;
+        const Data = new FormData();
+        Data.append('file', selectedFile);
+        let config = {
+            headers:{'Content-Type': 'application/json; charset=utf-8'}
+        }
+        axios.post(url, Data,config)
+        .then(response => {
+            dispatch(fetchUserSuccess(response.data.userId,response.data.userName,
+                response.data.firstName, response.data.lastName, response.data.password,
+                response.data.email, response.data.phone, response.data.avatarUrl,
+                response.data.createTime, response.data.updateTime));
+            const avatarUrl:string = "http://localhost:8080/user/avatar/"+response.data.userId;
+            axios.get(avatarUrl)
+            .then(res => {
+                dispatch(fetchUserAvatarSuccess(res.data.url))
+            }).catch(e => {
+                dispatch(fetchUserFail(e.message));
+            });             
+        })
+        .catch(err => {
+            dispatch(fetchUserFail(err.message));
+        });
+    }
+}
+
 
 export const fetchUserManageGroupsById = (userId:number) => {
     return (dispatch:any) => {

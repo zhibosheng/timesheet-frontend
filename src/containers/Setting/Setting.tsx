@@ -1,14 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '@material-ui/core';
+import React, { useState, useEffect, Fragment } from 'react';
+import * as actions from '../../store/actions/user';
+import { connect } from 'react-redux';
+import ChangePassword from './ChangePassword';
+import UploadAvatar from './UploadAvatar';
+
 const Setting = (props:any) => {
     return (
-    <Button
-        variant="contained"
-        color="primary"
-        >
-        Change Password 
-    </Button>
+        <Fragment>
+            <ChangePassword />
+            <UploadAvatar />
+        </Fragment>
     );
 }
+const mapStateToProps = (state: any) => {
+    return {
+    }
+}
 
-export default Setting;
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+   };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Setting);
