@@ -17,32 +17,34 @@ const useStyles = makeStyles({
 });
 
 
-export default function ManageGroupsTable(props:any) {
+export default function ManageGroupUsersTable(props:any) {
   const classes = useStyles();
-  let rows = props.manageGroups;
+  let rows = props.users;
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>groupName</TableCell>
-            <TableCell align="right">groupDescription</TableCell>
-            <TableCell align="right">createTime</TableCell>
-            <TableCell align="right">updateTime</TableCell>
+            <TableCell>userName</TableCell>
+            <TableCell align="right">firstName</TableCell>
+            <TableCell align="right">lastName</TableCell>
+            <TableCell align="right">email</TableCell>
+            <TableCell align="right">phone</TableCell>
             <TableCell align="right">editing</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row:any) => (
-            <TableRow key={row.groupId}>
+            <TableRow key={row.userId}>
               <TableCell component="th" scope="row">
-                {row.groupName}
+                {row.userName}
               </TableCell>
-              <TableCell align="right">{row.groupDescription}</TableCell>
-              <TableCell align="right">{new Date(row.createTime).toLocaleDateString()}</TableCell>
-              <TableCell align="right">{new Date(row.updateTime).toLocaleDateString()}</TableCell>
-              <TableCell align="right"><Button variant="contained" color="secondary" onClick={() => props.handleDialogClickOpen(row.groupId)}>
-                edit
+              <TableCell align="right">{row.firstName}</TableCell>
+              <TableCell align="right">{row.lastName}</TableCell>
+              <TableCell align="right">{row.email}</TableCell>
+              <TableCell align="right">{row.phone}</TableCell>
+              <TableCell align="right"><Button variant="contained" color="secondary" onClick={() => props.deleteUser(row.userId)}>
+                delete
               </Button></TableCell>
             </TableRow>
           ))}

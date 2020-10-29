@@ -8,6 +8,8 @@ import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import authReducer from './store/reducers/auth';
 import registerReducer from './store/reducers/register';
 import userReducer from './store/reducers/user';
+import hrReducer from './store/reducers/hr';
+import groupReducer from './store/reducers/group';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
@@ -23,9 +25,9 @@ export const rootReducer = combineReducers({
   auth: authReducer,
   register: registerReducer,
   user: userReducer,
+  hr: hrReducer,
+  group: groupReducer,
 });
-
-export type RootState = ReturnType<typeof rootReducer>
 
 const store = createStore(rootReducer, composeEnhancers(
   applyMiddleware(thunk)

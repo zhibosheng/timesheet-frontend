@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Button, CircularProgress, Snackbar } from "@material-ui/core";
 
-import * as actions from '../../store/actions/auth';
+import * as authActions from '../../store/actions/auth';
 import { connect } from "react-redux";
 import Alert from '@material-ui/lab/Alert';
 import CustomizedSnackbars from '../../components/Snackbars/CustomizedSnackbar';
@@ -114,7 +114,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        onAuth: (userName: string, password: string) => dispatch(actions.auth(userName, password))
+        onAuth: (userName: string, password: string) => dispatch(authActions.auth(userName, password))
     };
 };
 

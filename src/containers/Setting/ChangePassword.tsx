@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/user';
+import * as userActions from '../../store/actions/user';
 import { Severity } from '../../shared/type';
 import CustomizedSnackbars from '../../components/Snackbars/CustomizedSnackbar';
 
@@ -56,7 +56,7 @@ const ChangePassword = (props: any) => {
                     change password
                 </Button>
                 <Dialog open={dialogOpen} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogTitle id="form-dialog-title">change password</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             To change your password, please enter your previous password here.
@@ -125,7 +125,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        updateUserPassword: (userId: number, oldPassword: string, newPassword: string) => dispatch(actions.updateUserPassword(userId, oldPassword, newPassword))
+        updateUserPassword: (userId: number, oldPassword: string, newPassword: string) => dispatch(userActions.updateUserPassword(userId, oldPassword, newPassword))
     };
 };
 

@@ -3,7 +3,7 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import {Button, CircularProgress} from "@material-ui/core";
 import { connect } from "react-redux";
-import * as actions from '../../store/actions/register';
+import * as registerActions from '../../store/actions/register';
 import { register } from '../../serviceWorker';
 import { Severity } from '../../shared/type';
 import CustomizedSnackbars from '../../components/Snackbars/CustomizedSnackbar';
@@ -147,7 +147,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        onRegister: (userName: string, firstName:string, lastName:string, password:string, email:string, phone:string) => dispatch(actions.register(userName, firstName, lastName, password, email, phone))
+        onRegister: (userName: string, firstName:string, lastName:string, password:string, email:string, phone:string) => dispatch(registerActions.register(userName, firstName, lastName, password, email, phone))
     };
 };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useLayoutEffect } from 'react';
 import ContractTable from '../../components/Table/ContractTable';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import * as actions from '../../store/actions/user';
+import * as userActions from '../../store/actions/user';
 import { RootState } from '../../shared/type';
 
 const Contract = (props:any) => {
@@ -22,7 +22,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        fetchUserContractsById: (userId:number) => dispatch(actions.fetchUserContractsById(userId))
+        fetchUserContractsById: (userId:number) => dispatch(userActions.fetchUserContractsById(userId))
     };
 };
 

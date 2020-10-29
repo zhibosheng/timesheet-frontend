@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Avatar, TextField, Button } from '@material-ui/core';
-import * as actions from '../../store/actions/user';
+import * as userActions from '../../store/actions/user';
 import { Severity } from '../../shared/type';
 import CustomizedSnackbars from '../../components/Snackbars/CustomizedSnackbar';
 
@@ -27,10 +27,10 @@ const Profile = (props:any) => {
         props.updateUserInformation(props.userId,userName, firstName, lastName, props.password, email, phone,props.avatarUrl)
         if(props.error){
             setSeverity("error");
-            setText("Sign In error");
+            setText("Update error");
         }else{
             setSeverity("success");
-            setText("Sign In success");
+            setText("Update success");
         }
         setOpen(true);
         
@@ -115,7 +115,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        updateUserInformation: (userId:number,userName: string, firstName: string, lastName: string, password:string, email: string, phone: string,avatarUrl:string) => dispatch(actions.updateUserInformation(userId,userName, firstName, lastName, password, email, phone, avatarUrl))
+        updateUserInformation: (userId:number,userName: string, firstName: string, lastName: string, password:string, email: string, phone: string,avatarUrl:string) => dispatch(userActions.updateUserInformation(userId,userName, firstName, lastName, password, email, phone, avatarUrl))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
