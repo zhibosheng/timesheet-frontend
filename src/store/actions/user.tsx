@@ -46,10 +46,18 @@ export const fetchUserJoinGroupsSuccess = (joinGroups:any) => {
     };
 };
 
-export const fetchUserContractSuccess = (contracts:any) => {
+export const fetchUserManageContractsSuccess = (manageContracts:any) => {
     return {
-        type: actionTypes.FETCH_USER_CONTRACT_SUCCESS,
-        contracts: contracts,
+        type: actionTypes.FETCH_USER_MANAGECONTRACTS_SUCCESS,
+        manageContracts: manageContracts,
+    };
+};
+
+
+export const fetchUserJoinContractsSuccess = (joinContracts:any) => {
+    return {
+        type: actionTypes.FETCH_USER_JOINCONTRACTS_SUCCESS,
+        joinContracts: joinContracts,
     };
 };
 
@@ -191,15 +199,28 @@ export const fetchUserJoinGroupsById = (userId:number) => {
     }
 }
 
-
-
-export const fetchUserContractsById = (userId:number) => {
+export const fetchUserManageContractsById = (userId:number) => {
     return (dispatch:any) => {
         dispatch(fetchUserStart());
-        const url:string = "http://localhost:8080/user/findContracts/"+userId;
+        const url:string = "http://localhost:8080/user/manageContracts/"+userId;
         axios.get(url)
         .then(response => {
-            dispatch(fetchUserContractSuccess(response.data));       
+            dispatch(fetchUserManageContractsSuccess(response.data));       
+        })
+        .catch(err => {
+            dispatch(fetchUserFail(err.message));
+        });
+    }
+}
+
+
+export const fetchUserJoinContractsById = (userId:number) => {
+    return (dispatch:any) => {
+        dispatch(fetchUserStart());
+        const url:string = "http://localhost:8080/user/contracts/"+userId;
+        axios.get(url)
+        .then(response => {
+            dispatch(fetchUserJoinContractsSuccess(response.data));       
         })
         .catch(err => {
             dispatch(fetchUserFail(err.message));

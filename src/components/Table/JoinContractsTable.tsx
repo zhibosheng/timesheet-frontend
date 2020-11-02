@@ -16,9 +16,9 @@ const useStyles = makeStyles({
 });
 
 
-export default function ContractTable(props:any) {
+export default function JoinContractsTable(props:any) {
   const classes = useStyles();
-  let rows = props.contracts
+  let rows = props.joinContracts;
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">

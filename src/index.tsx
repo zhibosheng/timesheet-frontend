@@ -8,8 +8,9 @@ import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import authReducer from './store/reducers/auth';
 import registerReducer from './store/reducers/register';
 import userReducer from './store/reducers/user';
-import hrReducer from './store/reducers/hr';
 import groupReducer from './store/reducers/group';
+import contractReducer from './store/reducers/contract';
+import hrReducer from './store/reducers/hr';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
@@ -25,8 +26,9 @@ export const rootReducer = combineReducers({
   auth: authReducer,
   register: registerReducer,
   user: userReducer,
-  hr: hrReducer,
   group: groupReducer,
+  contract: contractReducer,
+  hr: hrReducer,
 });
 
 const store = createStore(rootReducer, composeEnhancers(

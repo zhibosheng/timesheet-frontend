@@ -15,7 +15,8 @@ const initialState: Object= {
     updateTime: null,
     manageGroups: [],
     joinGroups: [],
-    contracts: [],
+    manageContracts:[],
+    joinContracts: [],
     error: null,
     loading: false,
 };
@@ -66,9 +67,18 @@ const fetchUserJoinGroupsSuccess = (state:any, action:any) => {
     });
 };
 
-const fetchUserContractSuccess = (state:any, action:any) => {
+const fetchUserManageContractsSuccess = (state:any, action:any) => {
     return updateObject( state, {
-        contracts : action.contracts,
+        manageContracts : action.manageContracts,
+        error: null,
+        loading: false
+    });
+};
+
+
+const fetchUserJoinContractsSuccess = (state:any, action:any) => {
+    return updateObject( state, {
+        joinContracts : action.joinContracts,
         error: null,
         loading: false
     });
@@ -89,7 +99,8 @@ const reducer = ( state:any = initialState, action:any ) => {
         case actionTypes.FETCH_USER_AVATAR_SUCCESS: return fetchUserAvatarSuccess(state, action);
         case actionTypes.FETCH_USER_MANAGEGROUPS_SUCCESS: return fetchUserManageGroupsSuccess(state, action)
         case actionTypes.FETCH_USER_JOINGROUPS_SUCCESS: return fetchUserJoinGroupsSuccess(state, action)
-        case actionTypes.FETCH_USER_CONTRACT_SUCCESS: return fetchUserContractSuccess(state, action)
+        case actionTypes.FETCH_USER_MANAGECONTRACTS_SUCCESS: return fetchUserManageContractsSuccess(state, action)
+        case actionTypes.FETCH_USER_JOINCONTRACTS_SUCCESS: return fetchUserJoinContractsSuccess(state, action)
         case actionTypes.FETCH_USER_FAIL: return fetchUserFail(state, action);
         default:
             return state;

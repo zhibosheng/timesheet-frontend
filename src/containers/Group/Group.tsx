@@ -22,6 +22,18 @@ const Group = (props: any) => {
         props.fetchUserManageGroupsById(userId);
         props.fetchUserJoinGroupsById(userId);
     }, []);
+    
+    const addGroupUserByName = (addUserName:string) => {
+        props.addGroupUserByName(manageGroupId,addUserName);
+        if (props.error) {
+            setSeverity("error");
+            setText("add user error");
+        } else {
+            setSeverity("success");
+            setText("add user success");
+        }
+        setSnackbarOpen(true);
+    }
 
     const deleteUser = (userId: number) => {
         props.deleteGroupUser(manageGroupId,userId);
@@ -52,17 +64,6 @@ const Group = (props: any) => {
         setSnackbarOpen(false);
     };
 
-    const addGroupUserByName = (addUserName:string) => {
-        props.addGroupUserByName(manageGroupId,addUserName);
-        if (props.error) {
-            setSeverity("error");
-            setText("add user error");
-        } else {
-            setSeverity("success");
-            setText("add user success");
-        }
-        setSnackbarOpen(true);
-    }
     return (
         <Fragment>
             <ManageGroupsTable manageGroups={props.manageGroups} handleDialogClickOpen={handleDialogClickOpen} />
