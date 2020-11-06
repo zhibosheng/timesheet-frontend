@@ -61,6 +61,13 @@ export const fetchUserJoinContractsSuccess = (joinContracts:any) => {
     };
 };
 
+export const fetchAllUserSuccess = (users:any) => {
+    return {
+        type: actionTypes.FETCH_ALL_USERS_SUCCESS,
+        users: users,
+    };
+};
+
 export const fetchUserFail = (error:any) => {
     return {
         type: actionTypes.FETCH_USER_FAIL,
@@ -111,7 +118,7 @@ export const updateUserInformation = (userId:number, userName: string, firstName
             headers:{'Content-Type': 'application/json; charset=utf-8'}
         }
         const url:string = "http://localhost:8080/user/"
-        axios.put(url, Data,config)
+        axios.put(url, Data, config)
         .then(response => {
             dispatch(fetchUserSuccess(response.data.userId,response.data.userName,
                 response.data.firstName, response.data.lastName, response.data.password,
@@ -221,6 +228,20 @@ export const fetchUserJoinContractsById = (userId:number) => {
         axios.get(url)
         .then(response => {
             dispatch(fetchUserJoinContractsSuccess(response.data));       
+        })
+        .catch(err => {
+            dispatch(fetchUserFail(err.message));
+        });
+    }
+}
+
+export const fetchAllUsers = () => {
+    return (dispatch:any) => {
+        dispatch(fetchUserStart());
+        const url:string = "http://localhost:8080/user/allUsers";
+        axios.get(url)
+        .then(response => {
+            dispatch(fetchAllUserSuccess(response.data));       
         })
         .catch(err => {
             dispatch(fetchUserFail(err.message));

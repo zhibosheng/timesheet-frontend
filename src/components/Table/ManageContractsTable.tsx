@@ -43,7 +43,11 @@ export default function ManageContractsTable(props:any) {
               <TableCell align="right">{new Date(row.startDate).toLocaleDateString()}</TableCell>
               <TableCell align="right">{new Date(row.endDate).toLocaleDateString()}</TableCell>
               <TableCell align="right">{new Date(row.updateTime).toLocaleDateString()}</TableCell>
-              <TableCell align="right"><Button variant="contained" color="secondary" onClick={() => props.handleDialogClickOpen(row.contractId)}>
+              <TableCell align="right">
+              <Button variant="contained" color="primary" onClick={() => props.handleContractDialogClickOpen(row.contractId)}>
+                update
+              </Button>          
+              <Button variant="contained" color="secondary" onClick={() => props.handleUserDialogClickOpen(row.contractId)}>
                 edit
               </Button></TableCell>
             </TableRow>

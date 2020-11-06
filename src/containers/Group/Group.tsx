@@ -5,15 +5,20 @@ import * as groupActions from '../../store/actions/group';
 import ManageGroupsTable from '../../components/Table/ManageGroupsTable';
 import JoinGroupsTable from '../../components/Table/JoinGroupsTable';
 import { Divider, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button, TableContainer, Paper, TableHead, TableRow, TableCell, Table } from '@material-ui/core';
-import ManageGroupUsersTable from '../../components/Table/ManageGroupUsersTable';
+import ManageUsersTable from '../../components/Table/ManageUsersTable';
 import { Severity } from '../../shared/type';
 import CustomizedSnackbars from '../../components/Snackbars/CustomizedSnackbar';
+import ManageUserDialog from '../../components/Dialog/ManageUserDialog';
+import ManageGroupDialog from '../../components/Dialog/ManageGroupDialog';
 
 const Group = (props: any) => {
     const [userId, setUserId] = useState(props.userId);
     const [addUserName, setAddUserName] = useState("");
     const [manageGroupId, setManageGroupId] = useState(0);
-    const [dialogOpen, setDialogOpen] = useState(false);
+    const [groupName, setGroupName] = useState("");
+    const [groupDescription, setGroupDescription] = useState(""); 
+    const [groupDialogOpen, setGroupDialogOpen] = useState(false);
+    const [userDialogOpen, setUserDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [severity, setSeverity] = useState<Severity>(undefined);
     const [text, setText] = useState("");
@@ -47,14 +52,39 @@ const Group = (props: any) => {
         setSnackbarOpen(true);
     };
 
-    const handleDialogClickOpen = (groupId:number) => {
+    const updateGroupInformation = () => {
+        props.updateGroupInformation(manageGroupId,groupName,groupDescription);
+        if (props.error) {
+            setSeverity("error");
+            setText("update group information error");
+        } else {
+            setSeverity("success");
+            setText("update group information success");
+        }
+        setSnackbarOpen(true);
+        setGroupDialogOpen(false);
+        props.fetchUserManageGroupsById(userId);
+    }
+
+    const handleUserDialogClickOpen = (groupId:number) => {
         setManageGroupId(groupId)
         props.fetchGroupUsers(groupId);
-        setDialogOpen(true);
+        setUserDialogOpen(true);
     };
 
-    const handleDialogClose = () => {
-        setDialogOpen(false);
+    const handleUserDialogClose = () => {
+        setUserDialogOpen(false);
+    };
+
+    const handleGroupDialogClickOpen = (groupId:number) => {
+        setManageGroupId(groupId)
+        props.fetchGroupInformation(groupId);
+        setGroupDialogOpen(true);
+    };
+
+
+    const handleGroupDialogClose = () => {
+        setGroupDialogOpen(false);
     };
 
     const handleSnackbarClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -66,36 +96,28 @@ const Group = (props: any) => {
 
     return (
         <Fragment>
-            <ManageGroupsTable manageGroups={props.manageGroups} handleDialogClickOpen={handleDialogClickOpen} />
-            <Dialog maxWidth="lg" open={dialogOpen} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Management</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Manage group users
-                    </DialogContentText>
-                    <ManageGroupUsersTable users = {props.users} deleteUser = {deleteUser}/>
-                    <DialogContentText>
-                        Add users
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="addUserName"
-                        label="addUserName"
-                        defaultValue={addUserName}
-                        type="text"
-                        onChange={(event) => setAddUserName(event.target.value)}
-                    />
-                    <Button variant="contained" color="secondary" onClick={() => addGroupUserByName(addUserName)}>
-                        Add User
-                    </Button>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleDialogClose} color="primary">
-                        Cancel
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <ManageGroupsTable 
+                manageGroups={props.manageGroups}
+                handleGroupDialogClickOpen={handleGroupDialogClickOpen} 
+                handleUserDialogClickOpen={handleUserDialogClickOpen} />
+            <ManageGroupDialog 
+                dialogOpen = {groupDialogOpen}
+                handleDialogClose = {handleGroupDialogClose}
+                groupName = {props.groupName}
+                groupDescription = {props.groupDescription}
+                setGroupName = {setGroupName}
+                setGroupDescription = {setGroupDescription}
+                updateGroupInformation = {updateGroupInformation}
+            />
+            <ManageUserDialog 
+                dialogOpen = {userDialogOpen}
+                handleDialogClose = {handleUserDialogClose}
+                users = {props.users}
+                deleteUser = {deleteUser}
+                addUserName = {addUserName}
+                setAddUserName = {setAddUserName}
+                addUserByName = {addGroupUserByName}
+            />
             <Divider />
             <JoinGroupsTable joinGroups={props.joinGroups} />
             <CustomizedSnackbars
@@ -111,6 +133,9 @@ const Group = (props: any) => {
 const mapStateToProps = (state: any) => {
     return {
         userId: state.user.userId,
+        groupId: state.group.groupId,
+        groupName: state.group.groupName,
+        groupDescription: state.group.groupDescription,
         users: state.group.users,
         manageGroups: state.user.manageGroups,
         joinGroups: state.user.joinGroups,
@@ -121,6 +146,8 @@ const mapDispatchToProps = (dispatch: any) => {
     return {
         fetchUserManageGroupsById: (userId: number) => dispatch(userActions.fetchUserManageGroupsById(userId)),
         fetchUserJoinGroupsById: (userId: number) => dispatch(userActions.fetchUserJoinGroupsById(userId)),
+        fetchGroupInformation: (groupId:number) => dispatch(groupActions.fetchGroupInformation(groupId)),
+        updateGroupInformation: (groupId:number, groupName:string, groupDescription:string) => dispatch(groupActions.updateGroupInformation(groupId, groupName, groupDescription)),
         fetchGroupUsers: (groupId:number) => dispatch(groupActions.fetchGroupUsers(groupId)),
         addGroupUserByName: (groupId:number, userName:string) => dispatch(groupActions.addGroupUserByName(groupId, userName)),       
         deleteGroupUser: (groupId:number, userId:number) => dispatch(groupActions.deleteGroupUser(groupId, userId)),

@@ -7,7 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Button, TextField } from '@material-ui/core';
 
 
 const useStyles = makeStyles({
@@ -17,36 +16,29 @@ const useStyles = makeStyles({
 });
 
 
-export default function ManageGroupsTable(props:any) {
+export default function AllContractsTable(props:any) {
   const classes = useStyles();
-  let rows = props.manageGroups;
+  let rows = props.contracts;
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>groupName</TableCell>
-            <TableCell align="right">groupDescription</TableCell>
+            <TableCell>contractName</TableCell>
+            <TableCell align="right">company</TableCell>
             <TableCell align="right">createTime</TableCell>
             <TableCell align="right">updateTime</TableCell>
-            <TableCell align="right">editing</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row:any) => (
-            <TableRow key={row.groupId}>
+            <TableRow key={row.contractId}>
               <TableCell component="th" scope="row">
-                {row.groupName}
+                {row.contractName}
               </TableCell>
-              <TableCell align="right">{row.groupDescription}</TableCell>
+              <TableCell align="right">{row.company}</TableCell>
               <TableCell align="right">{new Date(row.createTime).toLocaleDateString()}</TableCell>
               <TableCell align="right">{new Date(row.updateTime).toLocaleDateString()}</TableCell>
-              <TableCell align="right"><Button variant="contained" color="primary" onClick={() => props.handleGroupDialogClickOpen(row.groupId)}>
-                update
-              </Button>           
-              <Button variant="contained" color="secondary" onClick={() => props.handleUserDialogClickOpen(row.groupId)}>
-                edit
-              </Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

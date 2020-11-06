@@ -7,13 +7,18 @@ import { RootState, Severity } from '../../shared/type';
 import ManageContractsTable from '../../components/Table/ManageContractsTable';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, Button, DialogActions } from '@material-ui/core';
 import CustomizedSnackbars from '../../components/Snackbars/CustomizedSnackbar';
-import ManageGroupUsersTable from '../../components/Table/ManageGroupUsersTable';
+import ManageUsersTable from '../../components/Table/ManageUsersTable';
+import ManageUserDialog from '../../components/Dialog/ManageUserDialog';
+import ManageContractDialog from '../../components/Dialog/ManageContractDialog';
 
 const Contract = (props:any) => {
     const [userId, setUserId] = useState(props.userId);
     const [addUserName, setAddUserName] = useState("");
     const [manageContractId, setManageContractId] = useState(0);
-    const [dialogOpen, setDialogOpen] = useState(false);
+    const [contractName, setContractName] = useState("");
+    const [company, setCompany] = useState(""); 
+    const [contractDialogOpen, setContractDialogOpen] = useState(false);
+    const [userDialogOpen, setUserDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [severity, setSeverity] = useState<Severity>(undefined);
     const [text, setText] = useState("");
@@ -48,16 +53,39 @@ const Contract = (props:any) => {
         setSnackbarOpen(true);
     };
 
+    const updateContractInformation = () => {
+        props.updateContractInformation(manageContractId, contractName, company);
+        if (props.error) {
+            setSeverity("error");
+            setText("update contract information error");
+        } else {
+            setSeverity("success");
+            setText("update contract information success");
+        }
+        setSnackbarOpen(true);
+        setContractDialogOpen(false);
+        props.fetchUserManageContractsById(userId);
+    }
 
-    const handleDialogClickOpen = (contractId:number) => {
+    const handleUserDialogClickOpen = (contractId:number) => {
         setManageContractId(contractId)
         props.fetchContractUsers(contractId);
-        setDialogOpen(true);
+        setUserDialogOpen(true);
     };
 
 
-    const handleDialogClose = () => {
-        setDialogOpen(false);
+    const handleUserDialogClose = () => {
+        setUserDialogOpen(false);
+    };
+
+    const handleContractDialogClickOpen = (contractId:number) => {
+        setManageContractId(contractId)
+        props.fetchContractInformation(contractId);
+        setContractDialogOpen(true);
+    };
+
+    const handleContractDialogClose = () => {
+        setContractDialogOpen(false);
     };
 
     const handleSnackbarClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -70,36 +98,28 @@ const Contract = (props:any) => {
 
     return (
         <Fragment>
-            <ManageContractsTable manageContracts= {props.manageContracts} handleDialogClickOpen={handleDialogClickOpen}/>
-            <Dialog maxWidth="lg" open={dialogOpen} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Management</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Manage Contract users
-                    </DialogContentText>
-                    <ManageGroupUsersTable users = {props.users} deleteUser = {deleteUser}/>
-                    <DialogContentText>
-                        Add users
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="addUserName"
-                        label="addUserName"
-                        defaultValue={addUserName}
-                        type="text"
-                        onChange={(event) => setAddUserName(event.target.value)}
-                    />
-                    <Button variant="contained" color="secondary" onClick={() => addContractUserByName(addUserName)}>
-                        Add User
-                    </Button>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleDialogClose} color="primary">
-                        Cancel
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <ManageContractsTable 
+            manageContracts= {props.manageContracts}
+            handleContractDialogClickOpen={handleContractDialogClickOpen}  
+            handleUserDialogClickOpen={handleUserDialogClickOpen}/>
+            <ManageContractDialog 
+                dialogOpen = {contractDialogOpen}
+                handleDialogClose = {handleContractDialogClose}
+                contractName = {props.contractName}
+                company = {props.company}
+                setContractName = {setContractName}
+                setCompany = {setCompany}
+                updateContractInformation = {updateContractInformation}
+            />
+            <ManageUserDialog 
+                dialogOpen = {userDialogOpen}
+                handleDialogClose = {handleUserDialogClose}
+                users = {props.users}
+                deleteUser = {deleteUser}
+                addUserName = {addUserName}
+                setAddUserName = {setAddUserName}
+                addUserByName = {addContractUserByName}
+            />
             <JoinContractsTable joinContracts= {props.joinContracts}/>
             <CustomizedSnackbars
                 open={snackbarOpen}
@@ -114,6 +134,9 @@ const Contract = (props:any) => {
 const mapStateToProps = (state: any) => {
     return {
         userId: state.user.userId,
+        contractId: state.contract.contractId,
+        contractName: state.contract.contractName,
+        company: state.contract.company,
         users: state.contract.users,
         manageContracts: state.user.manageContracts,
         joinContracts: state.user.joinContracts
@@ -124,6 +147,8 @@ const mapDispatchToProps = (dispatch: any) => {
     return {
         fetchUserManageContractsById: (userId:number) => dispatch(userActions.fetchUserManageContractsById(userId)),
         fetchUserJoinContractsById: (userId:number) => dispatch(userActions.fetchUserJoinContractsById(userId)),
+        fetchContractInformation: (contractId:number) => dispatch(contractActions.fetchContractInformation(contractId)),
+        updateContractInformation: (manageContractId:number, contractName:string, company:string) => dispatch(contractActions.updateContractInformation(manageContractId, contractName, company)),
         fetchContractUsers: (contractId:number) => dispatch(contractActions.fetchContractUsers(contractId)),
         addContractUserByName: (contractId:number, userName:string) => dispatch(contractActions.addContractUserByName(contractId, userName)),       
         deleteContractUser: (contractId:number, userId:number) => dispatch(contractActions.deleteContractUser(contractId, userId)),

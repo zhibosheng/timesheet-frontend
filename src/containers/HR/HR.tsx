@@ -1,26 +1,14 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import AllUsersTable from '../../components/Table/AllUsersTable';
-import * as hrActions from '../../store/actions/hr';
+import * as userActions from '../../store/actions/user';
 import { connect } from 'react-redux';
+import SimpleTabs from '../../components/Navigation/SimpleTabs';
 const HR = (props:any) => {
-    useEffect(() => {
-        props.fetchAllUsers();
-    },[]);
     return (
     <Fragment>
-        <AllUsersTable users= {props.users}/>
+        <SimpleTabs/>
     </Fragment>
     );
 }
-const mapStateToProps = (state: any) => {
-    return {
-        users:state.hr.users,
-    }
-}
 
-const mapDispatchToProps = (dispatch: any) => {
-    return {
-        fetchAllUsers: () => dispatch(hrActions.fetchAllUsers())
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(HR);
+export default HR;

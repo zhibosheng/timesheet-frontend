@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function ManageGroupUsersTable(props:any) {
+export default function ManageUsersTable(props:any) {
   const classes = useStyles();
   let rows = props.users;
   return (
