@@ -8,12 +8,13 @@ export const fetchGroupStart= () => {
     };
 };
 
-export const fetchGroupInformationSuccess = (groupId:number, groupName:string, groupDescription:string, createTime:Date, updateTime:Date) => {
+export const fetchGroupInformationSuccess = (groupId:number, groupName:string, groupDescription:string, manager:Object, createTime:Date, updateTime:Date) => {
     return {
         type: actionTypes.FETCH_GROUP_INFORMATION_SUCCESS,
         groupId: groupId,
         groupName: groupName,
         groupDescription: groupDescription,
+        manager:manager,
         createTime: createTime,
         updateTime: updateTime,
     };
@@ -26,6 +27,12 @@ export const fetchGroupUsersSuccess = (users:any) => {
     };
 };
 
+export const fetchAllGroupSuccess = (groups:any) => {
+    return {
+        type: actionTypes.FETCH_ALL_GROUPS_SUCCESS,
+        groups: groups,
+    };
+};
 export const fetchGroupFail = (error:any) => {
     return {
         type: actionTypes.FETCH_GROUP_FAIL,
@@ -33,6 +40,27 @@ export const fetchGroupFail = (error:any) => {
     };
 };
 
+
+
+export const createGroup = (groupName:string, groupDescription:string, managerName:string) => {
+    return (dispatch:any) => {
+        dispatch(fetchGroupStart());
+        const Data:Object = {
+        };
+        let config = {
+            headers:{'Content-Type': 'application/json; charset=utf-8'}
+        }
+        const url:string = "http://localhost:8080/createGroup/" + groupName + "/" + groupDescription + "/" + managerName;
+        axios.post(url, Data,config)
+        .then(response => {
+            dispatch(fetchGroupInformationSuccess(response.data.groupId,response.data.groupName, response.data.groupDescription,
+                response.data.manager, response.data.createTime, response.data.updateTime));       
+        })
+        .catch(err => {
+            dispatch(fetchGroupFail(err.message));
+        });
+    }
+}
 export const fetchGroupInformation = (groupId: number) => {
     return (dispatch:any) => {
         dispatch(fetchGroupStart());
@@ -40,7 +68,7 @@ export const fetchGroupInformation = (groupId: number) => {
         axios.get(url)
         .then(response => {
             dispatch(fetchGroupInformationSuccess(response.data.groupId,response.data.groupName, response.data.groupDescription,
-                response.data.createTime, response.data.updateTime));       
+                response.data.manager, response.data.createTime, response.data.updateTime));       
         })
         .catch(err => {
             dispatch(fetchGroupFail(err.message));
@@ -55,6 +83,7 @@ export const updateGroupInformation = (groupId:number, groupName:string, groupDe
             groupId: groupId,
             groupName: groupName,
             groupDescription: groupDescription,
+            // manager: manager,
         };
         let config = {
             headers:{'Content-Type': 'application/json; charset=utf-8'}
@@ -63,7 +92,7 @@ export const updateGroupInformation = (groupId:number, groupName:string, groupDe
         axios.put(url, Data,config)
         .then(response => {
             dispatch(fetchGroupInformationSuccess(response.data.groupId,response.data.groupName, response.data.groupDescription,
-                response.data.createTime, response.data.updateTime));       
+                response.data.manager, response.data.createTime, response.data.updateTime));       
         })
         .catch(err => {
             dispatch(fetchGroupFail(err.message));
@@ -123,3 +152,16 @@ export const deleteGroupUser = (groupId:number, userId:number) => {
     }
 }
 
+export const fetchAllGroups = () => {
+    return (dispatch:any) => {
+        dispatch(fetchGroupStart());
+        const url:string = "http://localhost:8080/group/allGroups";
+        axios.get(url)
+        .then(response => {
+            dispatch(fetchAllGroupSuccess(response.data));       
+        })
+        .catch(err => {
+            dispatch(fetchGroupFail(err.message));
+        });
+    }
+}

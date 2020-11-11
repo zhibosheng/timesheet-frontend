@@ -17,6 +17,13 @@ const Contract = (props:any) => {
     const [manageContractId, setManageContractId] = useState(0);
     const [contractName, setContractName] = useState("");
     const [company, setCompany] = useState(""); 
+    const [startDate, setStartDate] = useState<Date | null>(
+        new Date('2020-08-01T21:11:54'),
+    );
+    const [endDate, setEndDate] = useState<Date | null>(
+        new Date('2020-10-20T21:11:54'),
+    );
+    const [manageContracts, setManageContracts] = useState([]); 
     const [contractDialogOpen, setContractDialogOpen] = useState(false);
     const [userDialogOpen, setUserDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -27,6 +34,28 @@ const Contract = (props:any) => {
         props.fetchUserManageContractsById(userId);
         props.fetchUserJoinContractsById(userId);
     },[]);
+
+    useEffect(() => {
+        setContractName(props.contractName);
+    },[props.contractName]);
+
+    useEffect(() => {
+        setCompany(props.company);
+    },[props.company]);
+
+    useEffect(() => {
+        setStartDate(props.startDate);
+    },[props.startDate]);
+
+    useEffect(() => {
+        setEndDate(props.endDate);
+    },[props.endDate]);
+
+    useEffect(() => {
+        setManageContracts(props.manageContracts);
+    },[props.manageContracts]);
+
+
 
     const addContractUserByName = (addUserName:string) => {
         props.addContractUserByName(manageContractId, addUserName);
@@ -53,8 +82,9 @@ const Contract = (props:any) => {
         setSnackbarOpen(true);
     };
 
+
     const updateContractInformation = () => {
-        props.updateContractInformation(manageContractId, contractName, company);
+        props.updateContractInformation(manageContractId, contractName, company, startDate, endDate);
         if (props.error) {
             setSeverity("error");
             setText("update contract information error");
@@ -99,14 +129,19 @@ const Contract = (props:any) => {
     return (
         <Fragment>
             <ManageContractsTable 
-            manageContracts= {props.manageContracts}
-            handleContractDialogClickOpen={handleContractDialogClickOpen}  
-            handleUserDialogClickOpen={handleUserDialogClickOpen}/>
+                manageContracts = {manageContracts}
+                handleContractDialogClickOpen= {handleContractDialogClickOpen}  
+                handleUserDialogClickOpen = {handleUserDialogClickOpen}/>
             <ManageContractDialog 
                 dialogOpen = {contractDialogOpen}
                 handleDialogClose = {handleContractDialogClose}
-                contractName = {props.contractName}
-                company = {props.company}
+                contractName = {contractName}
+                company = {company}
+                manager = {props.manager}
+                startDate = {startDate}
+                endDate = {endDate}
+                setStartDate = {setStartDate}
+                setEndDate = {setEndDate}
                 setContractName = {setContractName}
                 setCompany = {setCompany}
                 updateContractInformation = {updateContractInformation}
@@ -122,10 +157,10 @@ const Contract = (props:any) => {
             />
             <JoinContractsTable joinContracts= {props.joinContracts}/>
             <CustomizedSnackbars
-                open={snackbarOpen}
-                severity={severity}
-                text={text}
-                onClose={handleSnackbarClose}
+                open = {snackbarOpen}
+                severity = {severity}
+                text = {text}
+                onClose = {handleSnackbarClose}
             />
         </Fragment>
     );
@@ -137,6 +172,9 @@ const mapStateToProps = (state: any) => {
         contractId: state.contract.contractId,
         contractName: state.contract.contractName,
         company: state.contract.company,
+        manager: state.contract.manager,
+        startDate: state.contract.startDate,
+        endDate: state.contract.endDate,
         users: state.contract.users,
         manageContracts: state.user.manageContracts,
         joinContracts: state.user.joinContracts
@@ -148,7 +186,7 @@ const mapDispatchToProps = (dispatch: any) => {
         fetchUserManageContractsById: (userId:number) => dispatch(userActions.fetchUserManageContractsById(userId)),
         fetchUserJoinContractsById: (userId:number) => dispatch(userActions.fetchUserJoinContractsById(userId)),
         fetchContractInformation: (contractId:number) => dispatch(contractActions.fetchContractInformation(contractId)),
-        updateContractInformation: (manageContractId:number, contractName:string, company:string) => dispatch(contractActions.updateContractInformation(manageContractId, contractName, company)),
+        updateContractInformation: (manageContractId:number, contractName:string, company:string, startDate:Date, endDate: Date) => dispatch(contractActions.updateContractInformation(manageContractId, contractName, company, startDate, endDate)),
         fetchContractUsers: (contractId:number) => dispatch(contractActions.fetchContractUsers(contractId)),
         addContractUserByName: (contractId:number, userName:string) => dispatch(contractActions.addContractUserByName(contractId, userName)),       
         deleteContractUser: (contractId:number, userId:number) => dispatch(contractActions.deleteContractUser(contractId, userId)),
@@ -157,12 +195,6 @@ const mapDispatchToProps = (dispatch: any) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contract);
 
-// const Contract = (props:any) => {
-//     const userId = useSelector((state: RootState) => state.user.userId);
-//     const contracts = useSelector((state: RootState) => state.user.contracts);
-//     const dispatch = useDispatch();
-//     dispatch(actions.fetchUserContractsById(userId));
-//     return (<ContractTable contracts= {contracts}/>);
-// }
 
-// export default Contract;
+
+

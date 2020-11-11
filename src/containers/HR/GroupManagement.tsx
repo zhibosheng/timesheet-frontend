@@ -1,16 +1,17 @@
-import React, { useEffect, Fragment, useState } from "react";
+import { useEffect, Fragment, useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
-import * as contractActions from '../../store/actions/contract';
-import AllContractsTable from "../../components/Table/AllContractsTable";
-import { Button, DialogTitle, Dialog, DialogContent, DialogContentText, TextField, DialogActions } from "@material-ui/core";
+import * as groupActions from '../../store/actions/group';
+import AllGroupsTable from "../../components/Table/AllGroupsTable";
+import { Button, Dialog, DialogTitle, DialogContentText, DialogContent, TextField, DialogActions } from "@material-ui/core";
 import { Severity } from "../../shared/type";
 import CustomizedSnackbars from '../../components/Snackbars/CustomizedSnackbar';
 
 
-const ContractManagement = (props: any) => {
-    const [contractName, setContractName] = useState("")
-    const [company, setCompany] = useState("")
+const GroupManagement = (props: any) => {
+    const [groupName, setGroupName] = useState("");
+    const [groupDescription, setGroupDescription] = useState(""); 
     const [managerName, setManagerName] = useState("")
     const [dialogOpen, setDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -18,7 +19,7 @@ const ContractManagement = (props: any) => {
     const [text, setText] = useState("");
     
     useEffect(() => {
-        props.fetchAllContracts();
+        props.fetchAllGroups();
     }, []);
 
     const handleDialogClickOpen = () => {
@@ -39,15 +40,15 @@ const ContractManagement = (props: any) => {
 
     const submitHandler = (event: React.MouseEvent) => {
         event.preventDefault();
-        props.createContract(contractName, company, managerName);
+        props.createGroup(groupName, groupDescription, managerName);
         if (props.error) {
             setSeverity("error");
-            setText("create new contract error");
+            setText("create new group error");
         } else {
             setSeverity("success");
-            setText("create new contract success");
+            setText("create new group success");
         }
-        props.fetchAllContracts();
+        props.fetchAllGroups();
         setDialogOpen(false);
         setSnackbarOpen(true);
     }
@@ -56,30 +57,30 @@ const ContractManagement = (props: any) => {
         <Fragment>
             <div>
                 <Button variant="contained" color="primary" onClick={handleDialogClickOpen}>
-                    create  contract
+                    create group
                 </Button>
                 <Dialog open={dialogOpen} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">create new contract</DialogTitle>
+                    <DialogTitle id="form-dialog-title">create new group</DialogTitle>
                     <DialogContent>
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="contractName"
-                            label="contractName"
-                            defaultValue={contractName}
+                            id="groupName"
+                            label="groupName"
+                            defaultValue={groupName}
                             type="text"
                             fullWidth
-                            onChange={(event) => setContractName(event.target.value)}
+                            onChange={(event) => setGroupName(event.target.value)}
                         />
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="company"
-                            label="company"
-                            defaultValue={company}
+                            id="groupDescription"
+                            label="groupDescription"
+                            defaultValue={groupDescription}
                             type="text"
                             fullWidth
-                            onChange={(event) => setCompany(event.target.value)}
+                            onChange={(event) => setGroupDescription(event.target.value)}
                         />
                         <TextField
                             autoFocus
@@ -102,7 +103,7 @@ const ContractManagement = (props: any) => {
                     </DialogActions>
                 </Dialog>
             </div>
-            <AllContractsTable contracts={props.contracts} />
+            <AllGroupsTable groups={props.groups} />
             <CustomizedSnackbars
                 open={snackbarOpen}
                 severity={severity}
@@ -115,14 +116,14 @@ const ContractManagement = (props: any) => {
 
 const mapStateToProps = (state: any) => {
     return {
-        contracts: state.contract.contracts,
+        groups: state.group.groups,
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        fetchAllContracts: ()  => dispatch(contractActions.fetchAllContracts()),
-        createContract: (contractName:string, company:string, managerName:string) => dispatch(contractActions.createContract(contractName, company, managerName))
+        fetchAllGroups: () => dispatch(groupActions.fetchAllGroups()),
+        createGroup: (groupName:string, groupDescription:string, managerName:string) => dispatch(groupActions.createGroup(groupName, groupDescription, managerName))
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(ContractManagement);
+export default connect(mapStateToProps, mapDispatchToProps)(GroupManagement);

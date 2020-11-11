@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import UserManagement from '../../containers/HR/UserManagement';
 import ContractManagement from '../../containers/HR/ContractManagement';
+import GroupManagement from '../../containers/HR/GroupManagement';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -67,7 +68,7 @@ export default function SimpleTabs(props:any) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Group
+        <GroupManagement />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <ContractManagement />

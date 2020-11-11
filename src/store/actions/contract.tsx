@@ -8,12 +8,14 @@ export const fetchContractStart= () => {
 };
 
 
-export const fetchContractInformationSuccess = (contractId:number, contractName:string, company:string, createTime:Date, updateTime:Date) => {
+export const fetchContractInformationSuccess = (contractId:number, contractName:string, company:string, startDate:Date, endDate:Date, createTime:Date, updateTime:Date) => {
     return {
         type: actionTypes.FETCH_CONTRACT_INFORMATION_SUCCESS,
         contractId: contractId,
         contractName: contractName,
         company: company,
+        startDate: startDate,
+        endDate:endDate,
         createTime: createTime,
         updateTime: updateTime,
     };
@@ -41,14 +43,21 @@ export const fetchContractFail = (error:any) => {
     };
 };
 
-export const fetchContractInformation = (contractId: number) => {
+
+
+export const createContract = (contractName:string, company:string, managerName:string) => {
     return (dispatch:any) => {
         dispatch(fetchContractStart());
-        const url:string = "http://localhost:8080/contract/" + contractId;
-        axios.get(url)
+        const Data:Object = {
+        };
+        let config = {
+            headers:{'Content-Type': 'application/json; charset=utf-8'}
+        }
+        const url:string = "http://localhost:8080/createContract/" + contractName + "/" + company + "/" + managerName;
+        axios.post(url, Data,config)
         .then(response => {
             dispatch(fetchContractInformationSuccess(response.data.contractId,response.data.contractName, response.data.company,
-                response.data.createTime, response.data.updateTime));       
+                response.data.startDate, response.data.endDate, response.data.createTime, response.data.updateTime));       
         })
         .catch(err => {
             dispatch(fetchContractFail(err.message));
@@ -56,13 +65,30 @@ export const fetchContractInformation = (contractId: number) => {
     }
 }
 
-export const updateContractInformation = (contractId:number, contractName:string, company:string) => {
+export const fetchContractInformation = (contractId: number) => {
+    return (dispatch:any) => {
+        dispatch(fetchContractStart());
+        const url:string = "http://localhost:8080/contract/" + contractId;
+        axios.get(url)
+        .then(response => {
+            dispatch(fetchContractInformationSuccess(response.data.contractId,response.data.contractName, response.data.company,
+                response.data.startDate, response.data.endDate, response.data.createTime, response.data.updateTime));       
+        })
+        .catch(err => {
+            dispatch(fetchContractFail(err.message));
+        });
+    }
+}
+
+export const updateContractInformation = (contractId:number, contractName:string, company:string, startDate:Date, endDate: Date) => {
     return (dispatch:any) => {
         dispatch(fetchContractStart());
         const Data:Object = {
             contractId: contractId,
             contractName: contractName,
             company: company,
+            startDate: startDate, 
+            endDate: endDate
         };
         let config = {
             headers:{'Content-Type': 'application/json; charset=utf-8'}
@@ -71,7 +97,7 @@ export const updateContractInformation = (contractId:number, contractName:string
         axios.put(url, Data,config)
         .then(response => {
             dispatch(fetchContractInformationSuccess(response.data.contractId,response.data.contractName, response.data.company,
-                response.data.createTime, response.data.updateTime));       
+                response.data.startDate, response.data.endDate, response.data.createTime, response.data.updateTime));       
         })
         .catch(err => {
             dispatch(fetchContractFail(err.message));

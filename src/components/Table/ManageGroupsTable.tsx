@@ -27,6 +27,7 @@ export default function ManageGroupsTable(props:any) {
           <TableRow>
             <TableCell>groupName</TableCell>
             <TableCell align="right">groupDescription</TableCell>
+            <TableCell align="right">manager</TableCell>
             <TableCell align="right">createTime</TableCell>
             <TableCell align="right">updateTime</TableCell>
             <TableCell align="right">editing</TableCell>
@@ -39,6 +40,7 @@ export default function ManageGroupsTable(props:any) {
                 {row.groupName}
               </TableCell>
               <TableCell align="right">{row.groupDescription}</TableCell>
+              <TableCell align="right">{row.manager ? row.manager.userName : null}</TableCell>
               <TableCell align="right">{new Date(row.createTime).toLocaleDateString()}</TableCell>
               <TableCell align="right">{new Date(row.updateTime).toLocaleDateString()}</TableCell>
               <TableCell align="right"><Button variant="contained" color="primary" onClick={() => props.handleGroupDialogClickOpen(row.groupId)}>

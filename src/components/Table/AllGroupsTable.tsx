@@ -7,7 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Button } from '@material-ui/core';
 
 
 const useStyles = makeStyles({
@@ -17,9 +16,9 @@ const useStyles = makeStyles({
 });
 
 
-export default function JoinGroupsTable(props:any) {
+export default function AllGroupsTable(props:any) {
   const classes = useStyles();
-  let rows = props.joinGroups;
+  let rows = props.groups;
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -27,7 +26,6 @@ export default function JoinGroupsTable(props:any) {
           <TableRow>
             <TableCell>groupName</TableCell>
             <TableCell align="right">groupDescription</TableCell>
-            <TableCell align="right">manager</TableCell>
             <TableCell align="right">createTime</TableCell>
             <TableCell align="right">updateTime</TableCell>
           </TableRow>
@@ -39,7 +37,6 @@ export default function JoinGroupsTable(props:any) {
                 {row.groupName}
               </TableCell>
               <TableCell align="right">{row.groupDescription}</TableCell>
-              <TableCell align="right">{row.manager ? row.manager.userName : null}</TableCell>
               <TableCell align="right">{new Date(row.createTime).toLocaleDateString()}</TableCell>
               <TableCell align="right">{new Date(row.updateTime).toLocaleDateString()}</TableCell>
             </TableRow>

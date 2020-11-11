@@ -5,9 +5,11 @@ const initialState: Object= {
     groupId: 0,
     groupName: "",
     groupDescription: "",
+    manager: null,
     createTime: null,
     updateTime: null,
     users: [],
+    groups:[],
     error: null,
     loading: false,
 };
@@ -21,6 +23,7 @@ const fetchGroupInformationSuccess = (state:any, action:any) => {
         groupId: action.groupId,
         groupName: action.groupName,
         groupDescription: action.groupDescription,
+        manager: action.manager,
         createTime: action.createTime,
         updateTime: action.updateTime,
         error: null,
@@ -31,6 +34,14 @@ const fetchGroupInformationSuccess = (state:any, action:any) => {
 const fetchGroupUsersSuccess = (state:any, action:any) => {
     return updateObject( state, {
         users : action.users,
+        error: null,
+        loading: false
+    });
+};
+
+const fetchAllGroupsSuccess = (state:any, action:any) => {
+    return updateObject( state, {
+        groups : action.groups,
         error: null,
         loading: false
     });
@@ -48,6 +59,7 @@ const reducer = ( state:any = initialState, action:any ) => {
         case actionTypes.FETCH_GROUP_START: return fetchGroupStart(state, action);
         case actionTypes.FETCH_GROUP_INFORMATION_SUCCESS: return fetchGroupInformationSuccess(state, action);
         case actionTypes.FETCH_GROUP_USERS_SUCCESS: return fetchGroupUsersSuccess(state, action);
+        case actionTypes.FETCH_ALL_GROUPS_SUCCESS: return fetchAllGroupsSuccess(state, action);
         case actionTypes.FETCH_GROUP_FAIL: return fetchGroupFail(state, action);
         default:
             return state;

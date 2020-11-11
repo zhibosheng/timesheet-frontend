@@ -27,6 +27,7 @@ export default function ManageContractsTable(props:any) {
           <TableRow>
             <TableCell>contractName</TableCell>
             <TableCell align="right">company</TableCell>
+            <TableCell align="right">manager</TableCell>
             <TableCell align="right">startDate</TableCell>
             <TableCell align="right">endDate</TableCell>
             <TableCell align="right">updateTime</TableCell>
@@ -40,6 +41,7 @@ export default function ManageContractsTable(props:any) {
                 {row.contractName}
               </TableCell>
               <TableCell align="right">{row.company}</TableCell>
+              <TableCell align="right">{row.manager ? row.manager.userName : null}</TableCell>
               <TableCell align="right">{new Date(row.startDate).toLocaleDateString()}</TableCell>
               <TableCell align="right">{new Date(row.endDate).toLocaleDateString()}</TableCell>
               <TableCell align="right">{new Date(row.updateTime).toLocaleDateString()}</TableCell>
