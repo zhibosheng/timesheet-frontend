@@ -124,7 +124,7 @@ const Group = (props: any) => {
                 setGroupName = {setGroupName}
                 setGroupDescription = {setGroupDescription}
                 setManagerName = {setManagerName}
-                updateGroupInformation = {updateGroupInformation}
+                submit = {updateGroupInformation}
             />
             <ManageUserDialog 
                 dialogOpen = {userDialogOpen}

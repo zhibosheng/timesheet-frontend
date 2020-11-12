@@ -2,7 +2,6 @@ import React, { useEffect, Fragment, useState } from "react";
 import { connect } from "react-redux";
 
 import * as contractActions from '../../store/actions/contract';
-import AllContractsTable from "../../components/Table/AllContractsTable";
 import { Button, DialogTitle, Dialog, DialogContent, DialogContentText, TextField, DialogActions, Grid } from "@material-ui/core";
 import { Severity } from "../../shared/type";
 import CustomizedSnackbars from '../../components/Snackbars/CustomizedSnackbar';
@@ -27,7 +26,7 @@ const ContractManagement = (props: any) => {
     );
     const [contractDialogOpen, setContractDialogOpen] = useState(false);
     const [userDialogOpen, setUserDialogOpen] = useState(false);
-    const [dialogOpen, setDialogOpen] = useState(false);
+    const [createContractDialogOpen, setCreateContractDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [severity, setSeverity] = useState<Severity>(undefined);
     const [text, setText] = useState("");
@@ -99,12 +98,12 @@ const ContractManagement = (props: any) => {
     }
 
 
-    const handleDialogClickOpen = () => {
-        setDialogOpen(true);
+    const handleCreateContractDialogClickOpen = () => {
+        setCreateContractDialogOpen(true);
     };
 
-    const handleDialogClose = () => {
-        setDialogOpen(false);
+    const handleCreateContractDialogClose = () => {
+        setCreateContractDialogOpen(false);
     };
 
     const handleContractDialogClickOpen = (contractId:number) => {
@@ -135,8 +134,7 @@ const ContractManagement = (props: any) => {
         setSnackbarOpen(false);
     };
 
-    const submitHandler = (event: React.MouseEvent) => {
-        event.preventDefault();
+    const createContract = () => {
         props.createContract(contractName, company, managerName, startDate, endDate);
         if (props.error) {
             setSeverity("error");
@@ -146,89 +144,31 @@ const ContractManagement = (props: any) => {
             setText("create new contract success");
         }
         props.fetchAllContracts();
-        setDialogOpen(false);
+        setCreateContractDialogOpen(false);
         setSnackbarOpen(true);
     }
 
     return (
         <Fragment>
             <div>
-                <Button variant="contained" color="primary" onClick={handleDialogClickOpen}>
+                <Button variant="contained" color="primary" onClick={handleCreateContractDialogClickOpen}>
                     create  contract
                 </Button>
-                <Dialog open={dialogOpen} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">create new contract</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="contractName"
-                            label="contractName"
-                            defaultValue={contractName}
-                            type="text"
-                            fullWidth
-                            onChange={(event) => setContractName(event.target.value)}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="company"
-                            label="company"
-                            defaultValue={company}
-                            type="text"
-                            fullWidth
-                            onChange={(event) => setCompany(event.target.value)}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="managerName"
-                            label="managerName"
-                            defaultValue={managerName}
-                            type="text"
-                            fullWidth
-                            onChange={(event) => setManagerName(event.target.value)}
-                        />
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <Grid container justify="space-around">
-                                <KeyboardDatePicker
-                                    disableToolbar
-                                    variant="inline"
-                                    format="MM/dd/yyyy"
-                                    margin="normal"
-                                    id="startDate"
-                                    label="Date picker inline"
-                                    value={startDate}
-                                    onChange={setStartDate}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                />
-                                <KeyboardDatePicker
-                                    disableToolbar
-                                    variant="inline"
-                                    format="MM/dd/yyyy"
-                                    margin="normal"
-                                    id="endDate"
-                                    label="Date picker inline"
-                                    value={endDate}
-                                    onChange={setEndDate}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                />
-                            </Grid>
-                        </MuiPickersUtilsProvider>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleDialogClose} color="primary">
-                            Cancel
-                         </Button>
-                        <Button onClick={(event) => submitHandler(event)} color="primary">
-                            Update
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                <ManageContractDialog 
+                    dialogOpen = {createContractDialogOpen}
+                    handleDialogClose = {handleCreateContractDialogClose}
+                    contractName = {contractName}
+                    company = {company}
+                    manager = {props.manager}
+                    startDate = {startDate}
+                    endDate = {endDate}
+                    setContractName = {setContractName}
+                    setCompany = {setCompany}
+                    setManagerName = {setManagerName}
+                    setStartDate = {setStartDate}
+                    setEndDate = {setEndDate}
+                    submit = {createContract}
+                />
             </div>
             <ManageContractsTable 
                 manageContracts = {props.contracts}
@@ -247,7 +187,7 @@ const ContractManagement = (props: any) => {
                 setManagerName = {setManagerName}
                 setStartDate = {setStartDate}
                 setEndDate = {setEndDate}
-                updateContractInformation = {updateContractInformation}
+                submit = {updateContractInformation}
             />
             <ManageUserDialog 
                 dialogOpen = {userDialogOpen}

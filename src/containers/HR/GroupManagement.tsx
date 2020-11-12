@@ -3,7 +3,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 import * as groupActions from '../../store/actions/group';
-import AllGroupsTable from "../../components/Table/AllGroupsTable";
 import { Button, Dialog, DialogTitle, DialogContentText, DialogContent, TextField, DialogActions } from "@material-ui/core";
 import { Severity } from "../../shared/type";
 import CustomizedSnackbars from '../../components/Snackbars/CustomizedSnackbar';
@@ -19,7 +18,7 @@ const GroupManagement = (props: any) => {
     const [groupDescription, setGroupDescription] = useState(""); 
     const [managerName, setManagerName] = useState("")
     const [groups, setGroups] = useState([])
-    const [dialogOpen, setDialogOpen] = useState(false);
+    const [createGroupdialogOpen, setCreateGroupDialogOpen] = useState(false);
     const [groupDialogOpen, setGroupDialogOpen] = useState(false);
     const [userDialogOpen, setUserDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -81,6 +80,27 @@ const GroupManagement = (props: any) => {
         props.fetchAllGroups();
     }
 
+    const handleCreateGroupDialogClickOpen = () => {
+        setCreateGroupDialogOpen(true);
+    };
+
+    const handleCreateGroupDialogClose = () => {
+        setCreateGroupDialogOpen(false);
+    };
+
+    const handleGroupDialogClickOpen = (groupId:number) => {
+        setManageGroupId(groupId)
+        props.fetchGroupInformation(groupId);
+        setGroupDialogOpen(true);          
+    };
+
+
+    const handleGroupDialogClose = () => {
+        setGroupDialogOpen(false);
+    };
+
+
+
     const handleUserDialogClickOpen = (groupId:number) => {
         setManageGroupId(groupId)
         props.fetchGroupUsers(groupId);
@@ -91,26 +111,6 @@ const GroupManagement = (props: any) => {
         setUserDialogOpen(false);
     };
 
-    const handleGroupDialogClickOpen = (groupId:number) => {
-        setManageGroupId(groupId)
-        props.fetchGroupInformation(groupId);
-        setGroupDialogOpen(true);
-            
-    };
-
-
-    const handleGroupDialogClose = () => {
-        setGroupDialogOpen(false);
-    };
-
-    const handleDialogClickOpen = () => {
-        setDialogOpen(true);
-    };
-
-    const handleDialogClose = () => {
-        setDialogOpen(false);
-    };
-
 
     const handleSnackbarClose = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
@@ -119,8 +119,7 @@ const GroupManagement = (props: any) => {
         setSnackbarOpen(false);
     };
 
-    const submitHandler = (event: React.MouseEvent) => {
-        event.preventDefault();
+    const createGroup = () => {
         props.createGroup(groupName, groupDescription, managerName);
         if (props.error) {
             setSeverity("error");
@@ -130,59 +129,27 @@ const GroupManagement = (props: any) => {
             setText("create new group success");
         }
         props.fetchAllGroups();
-        setDialogOpen(false);
+        setCreateGroupDialogOpen(false);
         setSnackbarOpen(true);
     }
 
     return (
         <Fragment>
             <div>
-                <Button variant="contained" color="primary" onClick={handleDialogClickOpen}>
+                <Button variant="contained" color="primary" onClick={handleCreateGroupDialogClickOpen}>
                     create group
                 </Button>
-                <Dialog open={dialogOpen} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">create new group</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="groupName"
-                            label="groupName"
-                            defaultValue={groupName}
-                            type="text"
-                            fullWidth
-                            onChange={(event) => setGroupName(event.target.value)}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="groupDescription"
-                            label="groupDescription"
-                            defaultValue={groupDescription}
-                            type="text"
-                            fullWidth
-                            onChange={(event) => setGroupDescription(event.target.value)}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="managerName"
-                            label="managerName"
-                            defaultValue={managerName}
-                            type="text"
-                            fullWidth
-                            onChange={(event) => setManagerName(event.target.value)}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleDialogClose} color="primary">
-                            Cancel
-                         </Button>
-                        <Button onClick={(event) => submitHandler(event)} color="primary">
-                            Update
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                <ManageGroupDialog 
+                    dialogOpen = {createGroupdialogOpen}
+                    handleDialogClose = {handleCreateGroupDialogClose}
+                    groupName = {groupName}
+                    groupDescription = {groupDescription}
+                    managerName = {managerName} 
+                    setGroupName = {setGroupName}
+                    setGroupDescription = {setGroupDescription}
+                    setManagerName = {setManagerName}
+                    submit = {createGroup}
+                />
             </div>
             <ManageGroupsTable 
                 manageGroups={groups}
@@ -198,7 +165,7 @@ const GroupManagement = (props: any) => {
                 setGroupName = {setGroupName}
                 setGroupDescription = {setGroupDescription}
                 setManagerName = {setManagerName}
-                updateGroupInformation = {updateGroupInformation}
+                submit = {updateGroupInformation}
             />
             <ManageUserDialog 
                 dialogOpen = {userDialogOpen}

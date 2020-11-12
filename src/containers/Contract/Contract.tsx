@@ -152,7 +152,7 @@ const Contract = (props:any) => {
                 setManagerName = {setManagerName}
                 setStartDate = {setStartDate}
                 setEndDate = {setEndDate}
-                updateContractInformation = {updateContractInformation}
+                submit = {updateContractInformation}
             />
             <ManageUserDialog 
                 dialogOpen = {userDialogOpen}

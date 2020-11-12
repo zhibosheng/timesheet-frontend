@@ -41,6 +41,16 @@ export default function ManageContractDialog(props: any) {
                         type="text"
                         onChange={(event) => props.setCompany(event.target.value)}
                     />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="managerName"
+                        label="managerName"
+                        defaultValue={props.managerName}
+                        type="text"
+                        onChange={(event) => props.setManagerName(event.target.value)}
+                    />
+                    
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
                             <KeyboardDatePicker
@@ -76,8 +86,8 @@ export default function ManageContractDialog(props: any) {
                     <Button onClick={props.handleDialogClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={() => props.updateContractInformation()}>
-                        Update
+                    <Button onClick={() => props.submit()}>
+                        Submit
                     </Button>
                 </DialogActions>
             </Dialog>

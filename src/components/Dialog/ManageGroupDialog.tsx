@@ -44,8 +44,8 @@ export default function ManageGroupDialog(props: any) {
                     <Button onClick={props.handleDialogClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={() => props.updateGroupInformation()}>
-                        Update
+                    <Button onClick={() => props.submit()}>
+                        Submit
                     </Button>
                 </DialogActions>
             </Dialog>
