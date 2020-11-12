@@ -17,7 +17,7 @@ const ChangePassword = (props: any) => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [severity, setSeverity] = useState<Severity>(undefined);
-    const [text, setText] = useState("")
+    const [text, setText] = useState("");
 
     const handleDialogClickOpen = () => {
         setDialogOpen(true);

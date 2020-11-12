@@ -37,6 +37,7 @@ const UploadAvatar = (props: any) => {
         }
         setOpen(true);
     }
+    
     return (
         <Fragment>
             <input type="file" name="file" onChange={onChangeHandler}/>

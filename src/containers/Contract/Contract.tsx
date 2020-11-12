@@ -17,13 +17,14 @@ const Contract = (props:any) => {
     const [manageContractId, setManageContractId] = useState(0);
     const [contractName, setContractName] = useState("");
     const [company, setCompany] = useState(""); 
+    const [managerName, setManagerName] = useState("");
     const [startDate, setStartDate] = useState<Date | null>(
         new Date('2020-08-01T21:11:54'),
     );
     const [endDate, setEndDate] = useState<Date | null>(
         new Date('2020-10-20T21:11:54'),
     );
-    const [manageContracts, setManageContracts] = useState([]); 
+    // const [manageContracts, setManageContracts] = useState([]); 
     const [contractDialogOpen, setContractDialogOpen] = useState(false);
     const [userDialogOpen, setUserDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -44,6 +45,12 @@ const Contract = (props:any) => {
     },[props.company]);
 
     useEffect(() => {
+        if(props.manager){
+            setManagerName(props.manager.userName);
+        }
+    },[props.manager]);
+
+    useEffect(() => {
         setStartDate(props.startDate);
     },[props.startDate]);
 
@@ -51,9 +58,9 @@ const Contract = (props:any) => {
         setEndDate(props.endDate);
     },[props.endDate]);
 
-    useEffect(() => {
-        setManageContracts(props.manageContracts);
-    },[props.manageContracts]);
+    // useEffect(() => {
+    //     setManageContracts(props.manageContracts);
+    // },[props.manageContracts]);
 
 
 
@@ -84,7 +91,7 @@ const Contract = (props:any) => {
 
 
     const updateContractInformation = () => {
-        props.updateContractInformation(manageContractId, contractName, company, startDate, endDate);
+        props.updateContractInformation(manageContractId, contractName, company, managerName, startDate, endDate);
         if (props.error) {
             setSeverity("error");
             setText("update contract information error");
@@ -129,7 +136,7 @@ const Contract = (props:any) => {
     return (
         <Fragment>
             <ManageContractsTable 
-                manageContracts = {manageContracts}
+                manageContracts = {props.manageContracts}
                 handleContractDialogClickOpen= {handleContractDialogClickOpen}  
                 handleUserDialogClickOpen = {handleUserDialogClickOpen}/>
             <ManageContractDialog 
@@ -137,13 +144,14 @@ const Contract = (props:any) => {
                 handleDialogClose = {handleContractDialogClose}
                 contractName = {contractName}
                 company = {company}
-                manager = {props.manager}
+                managerName = {managerName}
                 startDate = {startDate}
                 endDate = {endDate}
-                setStartDate = {setStartDate}
-                setEndDate = {setEndDate}
                 setContractName = {setContractName}
                 setCompany = {setCompany}
+                setManagerName = {setManagerName}
+                setStartDate = {setStartDate}
+                setEndDate = {setEndDate}
                 updateContractInformation = {updateContractInformation}
             />
             <ManageUserDialog 
@@ -186,7 +194,7 @@ const mapDispatchToProps = (dispatch: any) => {
         fetchUserManageContractsById: (userId:number) => dispatch(userActions.fetchUserManageContractsById(userId)),
         fetchUserJoinContractsById: (userId:number) => dispatch(userActions.fetchUserJoinContractsById(userId)),
         fetchContractInformation: (contractId:number) => dispatch(contractActions.fetchContractInformation(contractId)),
-        updateContractInformation: (manageContractId:number, contractName:string, company:string, startDate:Date, endDate: Date) => dispatch(contractActions.updateContractInformation(manageContractId, contractName, company, startDate, endDate)),
+        updateContractInformation: (manageContractId:number, contractName:string, company:string, managerName:string, startDate:Date, endDate: Date) => dispatch(contractActions.updateContractInformation(manageContractId, contractName, company, managerName, startDate, endDate)),
         fetchContractUsers: (contractId:number) => dispatch(contractActions.fetchContractUsers(contractId)),
         addContractUserByName: (contractId:number, userName:string) => dispatch(contractActions.addContractUserByName(contractId, userName)),       
         deleteContractUser: (contractId:number, userId:number) => dispatch(contractActions.deleteContractUser(contractId, userId)),

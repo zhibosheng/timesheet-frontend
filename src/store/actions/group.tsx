@@ -42,19 +42,48 @@ export const fetchGroupFail = (error:any) => {
 
 
 
+// export const createGroup = (groupName:string, groupDescription:string, managerName:string) => {
+//     return (dispatch:any) => {
+//         dispatch(fetchGroupStart());
+//         const Data:Object = {
+//         };
+//         let config = {
+//             headers:{'Content-Type': 'application/json; charset=utf-8'}
+//         }
+//         const url:string = "http://localhost:8080/createGroup/" + groupName + "/" + groupDescription + "/" + managerName;
+//         axios.post(url, Data,config)
+//         .then(response => {
+//             dispatch(fetchGroupInformationSuccess(response.data.groupId,response.data.groupName, response.data.groupDescription,
+//                 response.data.manager, response.data.createTime, response.data.updateTime));       
+//         })
+//         .catch(err => {
+//             dispatch(fetchGroupFail(err.message));
+//         });
+//     }
+// }
+
 export const createGroup = (groupName:string, groupDescription:string, managerName:string) => {
     return (dispatch:any) => {
         dispatch(fetchGroupStart());
-        const Data:Object = {
-        };
-        let config = {
-            headers:{'Content-Type': 'application/json; charset=utf-8'}
-        }
-        const url:string = "http://localhost:8080/createGroup/" + groupName + "/" + groupDescription + "/" + managerName;
-        axios.post(url, Data,config)
+        const url:string = "http://localhost:8080/user/name/"+managerName;
+        axios.get(url)
         .then(response => {
-            dispatch(fetchGroupInformationSuccess(response.data.groupId,response.data.groupName, response.data.groupDescription,
-                response.data.manager, response.data.createTime, response.data.updateTime));       
+            const groupUrl:string = "http://localhost:8080/group";
+            const Data:Object = {
+                groupName: groupName,
+                groupDescription: groupDescription,
+                manager: response.data,
+            };
+            let config = {
+                headers:{'Content-Type': 'application/json; charset=utf-8'}
+            }
+            axios.post(groupUrl, Data, config)
+            .then(response => {
+                dispatch(fetchGroupInformationSuccess(response.data.groupId,response.data.groupName, response.data.groupDescription,
+                    response.data.manager, response.data.createTime, response.data.updateTime));  
+            }).catch(e => {
+                dispatch(fetchGroupFail(e.message));
+            });        
         })
         .catch(err => {
             dispatch(fetchGroupFail(err.message));
@@ -76,23 +105,53 @@ export const fetchGroupInformation = (groupId: number) => {
     }
 }
 
-export const updateGroupInformation = (groupId:number, groupName:string, groupDescription:string) => {
+// export const updateGroupInformation = (groupId:number, groupName:string, groupDescription:string,managerName:string) => {
+//     return (dispatch:any) => {
+//         dispatch(fetchGroupStart());
+//         const Data:Object = {
+//             groupId: groupId,
+//             groupName: groupName,
+//             groupDescription: groupDescription,
+//             // manager: manager,
+//         };
+//         let config = {
+//             headers:{'Content-Type': 'application/json; charset=utf-8'}
+//         }
+//         const url:string = "http://localhost:8080/group";
+//         axios.put(url, Data,config)
+//         .then(response => {
+//             dispatch(fetchGroupInformationSuccess(response.data.groupId,response.data.groupName, response.data.groupDescription,
+//                 response.data.manager, response.data.createTime, response.data.updateTime));       
+//         })
+//         .catch(err => {
+//             dispatch(fetchGroupFail(err.message));
+//         });
+//     }
+// }
+
+export const updateGroupInformation = (groupId:number, groupName:string, groupDescription:string,managerName:string) => {
     return (dispatch:any) => {
         dispatch(fetchGroupStart());
-        const Data:Object = {
-            groupId: groupId,
-            groupName: groupName,
-            groupDescription: groupDescription,
-            // manager: manager,
-        };
-        let config = {
-            headers:{'Content-Type': 'application/json; charset=utf-8'}
-        }
-        const url:string = "http://localhost:8080/group";
-        axios.put(url, Data,config)
+        const url:string = "http://localhost:8080/user/name/"+managerName;
+        axios.get(url)
         .then(response => {
-            dispatch(fetchGroupInformationSuccess(response.data.groupId,response.data.groupName, response.data.groupDescription,
-                response.data.manager, response.data.createTime, response.data.updateTime));       
+            const groupUrl:string = "http://localhost:8080/group";
+            const Data:Object = {
+                groupId: groupId,
+                groupName: groupName,
+                groupDescription: groupDescription,
+                manager: response.data,
+            };
+            let config = {
+                headers:{'Content-Type': 'application/json; charset=utf-8'}
+            }
+            axios.put(groupUrl, Data, config)
+            .then(response => {
+                dispatch(fetchGroupInformationSuccess(response.data.groupId,response.data.groupName, response.data.groupDescription,
+                    response.data.manager, response.data.createTime, response.data.updateTime));  
+            }).catch(e => {
+                dispatch(fetchGroupFail(e.message));
+            });        
         })
         .catch(err => {
             dispatch(fetchGroupFail(err.message));

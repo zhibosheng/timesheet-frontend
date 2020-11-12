@@ -17,6 +17,7 @@ const Group = (props: any) => {
     const [manageGroupId, setManageGroupId] = useState(0);
     const [groupName, setGroupName] = useState("");
     const [groupDescription, setGroupDescription] = useState(""); 
+    const [managerName, setManagerName] = useState("");
     const [groupDialogOpen, setGroupDialogOpen] = useState(false);
     const [userDialogOpen, setUserDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -27,6 +28,20 @@ const Group = (props: any) => {
         props.fetchUserManageGroupsById(userId);
         props.fetchUserJoinGroupsById(userId);
     }, []);
+
+    useEffect(() => {
+        setGroupName(props.groupName);
+    },[props.groupName]);
+
+    useEffect(() => {
+        setGroupDescription(props.groupDescription);
+    },[props.groupDescription]);
+
+    useEffect(() => {
+        if(props.manager){
+            setManagerName(props.manager.userName);
+        }
+    },[props.manager]);
     
     const addGroupUserByName = (addUserName:string) => {
         props.addGroupUserByName(manageGroupId,addUserName);
@@ -53,7 +68,7 @@ const Group = (props: any) => {
     };
 
     const updateGroupInformation = () => {
-        props.updateGroupInformation(manageGroupId,groupName,groupDescription);
+        props.updateGroupInformation(manageGroupId,groupName,groupDescription,managerName);
         if (props.error) {
             setSeverity("error");
             setText("update group information error");
@@ -103,10 +118,12 @@ const Group = (props: any) => {
             <ManageGroupDialog 
                 dialogOpen = {groupDialogOpen}
                 handleDialogClose = {handleGroupDialogClose}
-                groupName = {props.groupName}
-                groupDescription = {props.groupDescription}
+                groupName = {groupName}
+                groupDescription = {groupDescription}
+                managerName = {managerName} 
                 setGroupName = {setGroupName}
                 setGroupDescription = {setGroupDescription}
+                setManagerName = {setManagerName}
                 updateGroupInformation = {updateGroupInformation}
             />
             <ManageUserDialog 
@@ -136,6 +153,7 @@ const mapStateToProps = (state: any) => {
         groupId: state.group.groupId,
         groupName: state.group.groupName,
         groupDescription: state.group.groupDescription,
+        manager: state.group.manager,
         users: state.group.users,
         manageGroups: state.user.manageGroups,
         joinGroups: state.user.joinGroups,
@@ -147,7 +165,7 @@ const mapDispatchToProps = (dispatch: any) => {
         fetchUserManageGroupsById: (userId: number) => dispatch(userActions.fetchUserManageGroupsById(userId)),
         fetchUserJoinGroupsById: (userId: number) => dispatch(userActions.fetchUserJoinGroupsById(userId)),
         fetchGroupInformation: (groupId:number) => dispatch(groupActions.fetchGroupInformation(groupId)),
-        updateGroupInformation: (groupId:number, groupName:string, groupDescription:string) => dispatch(groupActions.updateGroupInformation(groupId, groupName, groupDescription)),
+        updateGroupInformation: (groupId:number, groupName:string, groupDescription:string, managerName:string) => dispatch(groupActions.updateGroupInformation(groupId, groupName, groupDescription, managerName)),
         fetchGroupUsers: (groupId:number) => dispatch(groupActions.fetchGroupUsers(groupId)),
         addGroupUserByName: (groupId:number, userName:string) => dispatch(groupActions.addGroupUserByName(groupId, userName)),       
         deleteGroupUser: (groupId:number, userId:number) => dispatch(groupActions.deleteGroupUser(groupId, userId)),

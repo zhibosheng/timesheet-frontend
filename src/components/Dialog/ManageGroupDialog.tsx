@@ -29,6 +29,15 @@ export default function ManageGroupDialog(props: any) {
                         type="text"
                         onChange={(event) => props.setGroupDescription(event.target.value)}
                     />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="managerName"
+                        label="managerName"
+                        defaultValue={props.managerName}
+                        type="text"
+                        onChange={(event) => props.setManagerName(event.target.value)}
+                    />
 
                 </DialogContent>
                 <DialogActions>
