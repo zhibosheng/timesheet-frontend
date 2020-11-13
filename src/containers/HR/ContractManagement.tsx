@@ -157,11 +157,11 @@ const ContractManagement = (props: any) => {
                 <ManageContractDialog 
                     dialogOpen = {createContractDialogOpen}
                     handleDialogClose = {handleCreateContractDialogClose}
-                    contractName = {contractName}
-                    company = {company}
-                    manager = {props.manager}
-                    startDate = {startDate}
-                    endDate = {endDate}
+                    contractName = {""}
+                    company = {""}
+                    manager = {""}
+                    startDate = {null}
+                    endDate = {null}
                     setContractName = {setContractName}
                     setCompany = {setCompany}
                     setManagerName = {setManagerName}

@@ -62,7 +62,7 @@ const Register = (props:any) => {
                     required
                     id="outlined-required"
                     label="UserName"
-                    defaultValue=""
+                    value=""
                     variant="outlined"
                     onChange={(event) => { setUserName(event.target.value); }}
                 />
@@ -70,7 +70,7 @@ const Register = (props:any) => {
                     required
                     id="outlined-required"
                     label="FirstName"
-                    defaultValue=""
+                    value=""
                     variant="outlined"
                     onChange={(event) => { setFirstName(event.target.value); }}
                 />
@@ -78,7 +78,7 @@ const Register = (props:any) => {
                     required
                     id="outlined-required"
                     label="LastName"
-                    defaultValue=""
+                    value=""
                     variant="outlined"
                     onChange={(event) => { setLastName(event.target.value); }}
                 />
@@ -86,6 +86,7 @@ const Register = (props:any) => {
                     id="outlined-password-input"
                     label="Password"
                     type="password"
+                    value=""
                     autoComplete="current-password"
                     variant="outlined"
                     onChange={(event) => setPassword(event.target.value)}
@@ -94,7 +95,7 @@ const Register = (props:any) => {
                     required
                     id="outlined-required"
                     label="Email"
-                    defaultValue=""
+                    value=""
                     variant="outlined"
                     onChange={(event) => { setEmail(event.target.value); }}
                 />
@@ -102,7 +103,7 @@ const Register = (props:any) => {
                     required
                     id="outlined-required"
                     label="Phone"
-                    defaultValue=""
+                    value=""
                     variant="outlined"
                     onChange={(event) => { setPhone(event.target.value); }}
                 />

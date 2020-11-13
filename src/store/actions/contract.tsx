@@ -170,16 +170,26 @@ export const updateContractInformation = (contractId:number, contractName:string
 }
 
 export const fetchContractUsers = (contractId: number) => {
+    let config = {
+        headers:{
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods' : 'GET'
+        },
+        proxy: {
+            host: 'localhost',
+            port: 3000
+        }
+    }
     return (dispatch:any) => {
         dispatch(fetchContractStart());
-        const url:string = "http://localhost:8080/contract/users/" + contractId;
+        const url:string = "http://localhost:8080/group/users/" + contractId;
         axios.get(url)
-        .then(response => {
-            dispatch(fetchContractUsersSuccess(response.data));       
-        })
-        .catch(err => {
-            dispatch(fetchContractFail(err.message));
-        });
+            .then(response => {
+                dispatch(fetchContractUsersSuccess(response.data));
+            })
+            .catch(err => {
+                dispatch(fetchContractFail(err.message));
+            });
     }
 }
 
@@ -220,7 +230,6 @@ export const deleteContractUser = (contractId:number, userId:number) => {
         });
     }
 }
-
 export const fetchAllContracts = () => {
     return (dispatch:any) => {
         dispatch(fetchContractStart());

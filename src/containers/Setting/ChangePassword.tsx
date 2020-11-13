@@ -66,7 +66,7 @@ const ChangePassword = (props: any) => {
                             margin="dense"
                             id="oldPassword"
                             label="oldPassword"
-                            defaultValue={oldPassword}
+                            value={oldPassword}
                             type="password"
                             fullWidth
                             onChange={(event) => setOldPassword(event.target.value)}
@@ -79,7 +79,7 @@ const ChangePassword = (props: any) => {
                             margin="dense"
                             id="newPassword"
                             label="newPassword"
-                            defaultValue={newPassword}
+                            value={newPassword}
                             type="password"
                             fullWidth
                             onChange={(event) => setNewPassword(event.target.value)}

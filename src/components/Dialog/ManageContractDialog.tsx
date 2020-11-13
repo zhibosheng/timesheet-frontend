@@ -28,7 +28,7 @@ export default function ManageContractDialog(props: any) {
                         margin="dense"
                         id="contractName"
                         label="contractName"
-                        defaultValue={props.contractName}
+                        value={props.contractName}
                         type="text"
                         onChange={(event) => props.setContractName(event.target.value)}
                     />
@@ -37,7 +37,7 @@ export default function ManageContractDialog(props: any) {
                         margin="dense"
                         id="company"
                         label="company"
-                        defaultValue={props.company}
+                        value={props.company}
                         type="text"
                         onChange={(event) => props.setCompany(event.target.value)}
                     />
@@ -46,7 +46,7 @@ export default function ManageContractDialog(props: any) {
                         margin="dense"
                         id="managerName"
                         label="managerName"
-                        defaultValue={props.managerName}
+                        value={props.managerName}
                         type="text"
                         onChange={(event) => props.setManagerName(event.target.value)}
                     />

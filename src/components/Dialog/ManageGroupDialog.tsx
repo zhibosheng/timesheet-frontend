@@ -16,7 +16,7 @@ export default function ManageGroupDialog(props: any) {
                         margin="dense"
                         id="groupName"
                         label="groupName"
-                        defaultValue={props.groupName}
+                        value={props.groupName}
                         type="text"
                         onChange={(event) => props.setGroupName(event.target.value)}
                     />
@@ -25,7 +25,7 @@ export default function ManageGroupDialog(props: any) {
                         margin="dense"
                         id="groupDescription"
                         label="groupDescription"
-                        defaultValue={props.groupDescription}
+                        value={props.groupDescription}
                         type="text"
                         onChange={(event) => props.setGroupDescription(event.target.value)}
                     />
@@ -34,7 +34,7 @@ export default function ManageGroupDialog(props: any) {
                         margin="dense"
                         id="managerName"
                         label="managerName"
-                        defaultValue={props.managerName}
+                        value={props.managerName}
                         type="text"
                         onChange={(event) => props.setManagerName(event.target.value)}
                     />

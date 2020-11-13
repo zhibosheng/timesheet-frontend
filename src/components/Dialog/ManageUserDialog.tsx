@@ -21,7 +21,7 @@ export default function ManageUserDialog(props: any) {
                         margin="dense"
                         id="addUserName"
                         label="addUserName"
-                        defaultValue={props.addUserName}
+                        value={props.addUserName}
                         type="text"
                         onChange={(event) => props.setAddUserName(event.target.value)}
                     />

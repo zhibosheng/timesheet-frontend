@@ -43,7 +43,7 @@ const Profile = (props:any) => {
                     required
                     id="outlined-required"
                     label="UserName"
-                    defaultValue={userName}
+                    value={userName}
                     variant="outlined"
                     onChange={(event) => setUserName(event.target.value)}
                 /></p>
@@ -51,7 +51,7 @@ const Profile = (props:any) => {
                     required
                     id="outlined-required"
                     label="FirstName"
-                    defaultValue={firstName}
+                    value={firstName}
                     variant="outlined"
                     onChange={(event) => setFirstName(event.target.value)}
                 /></p>
@@ -59,7 +59,7 @@ const Profile = (props:any) => {
                     required
                     id="outlined-required"
                     label="LastName"
-                    defaultValue={lastName}
+                    value={lastName}
                     variant="outlined"
                     onChange={(event) => setLastName(event.target.value)}
                 /></p>
@@ -67,7 +67,7 @@ const Profile = (props:any) => {
                     required
                     id="outlined-required"
                     label="email"
-                    defaultValue={email}
+                    value={email}
                     variant="outlined"
                     onChange={(event) => setEmail(event.target.value)}
                 /></p>
@@ -75,7 +75,7 @@ const Profile = (props:any) => {
                     required
                     id="outlined-required"
                     label="phone"
-                    defaultValue={phone}
+                    value={phone}
                     variant="outlined"
                     onChange={(event) => setPhone(event.target.value)}
                 /></p>

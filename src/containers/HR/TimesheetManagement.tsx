@@ -51,7 +51,7 @@ const TimesheetManagement = (props: any) => {
                 required
                 id="outlined-required"
                 label="email"
-                defaultValue={email}
+                value={email}
                 variant="outlined"
                 onChange={(event) => setEmail(event.target.value)}
             />
