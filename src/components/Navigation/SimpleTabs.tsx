@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import UserManagement from '../../containers/HR/UserManagement';
 import ContractManagement from '../../containers/HR/ContractManagement';
 import GroupManagement from '../../containers/HR/GroupManagement';
+import TimesheetManagement from '../../containers/HR/TimesheetManagement';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -77,7 +78,7 @@ export default function SimpleTabs(props:any) {
         <UserManagement />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Timesheet
+        <TimesheetManagement />
       </TabPanel>
     </div>
   );
