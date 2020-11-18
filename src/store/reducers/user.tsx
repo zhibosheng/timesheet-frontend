@@ -17,6 +17,7 @@ const initialState: Object= {
     joinGroups: [],
     manageContracts:[],
     joinContracts: [],
+    timesheets:[],
     users: [],
     error: null,
     loading: false,
@@ -85,6 +86,13 @@ const fetchUserJoinContractsSuccess = (state:any, action:any) => {
     });
 };
 
+const fetchUserTimesheetsSuccess = (state:any, action:any) => {
+    return updateObject( state, {
+        timesheets : action.timesheets,
+        error: null,
+        loading: false
+    });
+};
 
 const fetchAllUsersSuccess = (state:any, action:any) => {
     return updateObject( state, {
@@ -111,6 +119,7 @@ const reducer = ( state:any = initialState, action:any ) => {
         case actionTypes.FETCH_USER_JOINGROUPS_SUCCESS: return fetchUserJoinGroupsSuccess(state, action);
         case actionTypes.FETCH_USER_MANAGECONTRACTS_SUCCESS: return fetchUserManageContractsSuccess(state, action);
         case actionTypes.FETCH_USER_JOINCONTRACTS_SUCCESS: return fetchUserJoinContractsSuccess(state, action);
+        case actionTypes.FETCH_USER_TIMESHEETS_SUCCESS: return  fetchUserTimesheetsSuccess(state, action);
         case actionTypes.FETCH_ALL_USERS_SUCCESS: return fetchAllUsersSuccess(state, action);
         case actionTypes.FETCH_USER_FAIL: return fetchUserFail(state, action);
         default:

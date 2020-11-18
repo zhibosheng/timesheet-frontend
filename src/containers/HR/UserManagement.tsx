@@ -18,6 +18,8 @@ const UserManagement = (props:any) => {
 const mapStateToProps = (state: any) => {
     return {
         users:state.user.users,
+        loading: state.user.loading,
+        error: state.user.error,
     }
 }
 

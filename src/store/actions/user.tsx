@@ -61,6 +61,13 @@ export const fetchUserJoinContractsSuccess = (joinContracts:any) => {
     };
 };
 
+export const fetchUserTimesheetsSuccess = (timesheets:any) => {
+    return {
+        type: actionTypes.FETCH_USER_TIMESHEETS_SUCCESS,
+        timesheets: timesheets,
+    };
+};
+
 export const fetchAllUserSuccess = (users:any) => {
     return {
         type: actionTypes.FETCH_ALL_USERS_SUCCESS,
@@ -228,6 +235,20 @@ export const fetchUserJoinContractsById = (userId:number) => {
         axios.get(url)
         .then(response => {
             dispatch(fetchUserJoinContractsSuccess(response.data));       
+        })
+        .catch(err => {
+            dispatch(fetchUserFail(err.message));
+        });
+    }
+}
+
+export const fetchTimesheetsByUserIdAndDate = (userId:number, startDate:Date, endDate: Date) => {
+    return (dispatch:any) => {
+        dispatch(fetchUserStart());
+        const url:string = "http://localhost:8080/user/myTimesheet/"+userId+"/"+startDate+"/"+endDate;
+        axios.get(url)
+        .then(response => {
+            dispatch(fetchUserTimesheetsSuccess(response.data));       
         })
         .catch(err => {
             dispatch(fetchUserFail(err.message));

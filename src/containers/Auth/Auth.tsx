@@ -56,22 +56,22 @@ const Auth = (props: any) => {
     let form = (
         <form className={classes.root} noValidate autoComplete="off">
             <div>
-                <TextField
+                <p><TextField
                     required
                     id="outlined-required"
                     label="UserName"
                     defaultValue=""
                     variant="outlined"
                     onChange={(event) => { setUserName(event.target.value); }}
-                />
-                <TextField
+                /></p>
+                <p><TextField
                     id="outlined-password-input"
                     label="Password"
                     type="password"
                     autoComplete="current-password"
                     variant="outlined"
                     onChange={(event) => setPassword(event.target.value)}
-                />
+                /></p>
             </div>
             <Button
                 variant="contained"
@@ -94,7 +94,9 @@ const Auth = (props: any) => {
 
     return (
         <Fragment>
-            {form}
+            <div style={{textAlign:"center"}}>
+                {form}
+            </div>
             <CustomizedSnackbars 
                 open = {open}
                 severity = {severity}

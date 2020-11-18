@@ -38,7 +38,8 @@ const Profile = (props:any) => {
 
     return (
         <Fragment>
-            <p><Avatar alt="User Avatar" src={props.avatar} /></p>
+            <div style={{textAlign:"center"}}>
+            <p ><Avatar style={{margin:"0 auto"}} alt="User Avatar" src={props.avatar} /></p>
             <p><TextField
                     required
                     id="outlined-required"
@@ -85,6 +86,7 @@ const Profile = (props:any) => {
                 onClick={(event) => submitHandler(event)}>
                 Update
             </Button>
+            </div>
             <CustomizedSnackbars 
                 open = {open}
                 severity = {severity}

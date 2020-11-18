@@ -159,7 +159,7 @@ const ContractManagement = (props: any) => {
                     handleDialogClose = {handleCreateContractDialogClose}
                     contractName = {""}
                     company = {""}
-                    manager = {""}
+                    managerName = {""}
                     startDate = {null}
                     endDate = {null}
                     setContractName = {setContractName}
@@ -179,7 +179,7 @@ const ContractManagement = (props: any) => {
                 handleDialogClose = {handleContractDialogClose}
                 contractName = {contractName}
                 company = {company}
-                manager = {props.manager}
+                managerName = {managerName}
                 startDate = {startDate}
                 endDate = {endDate}
                 setContractName = {setContractName}
@@ -218,6 +218,8 @@ const mapStateToProps = (state: any) => {
         endDate: state.contract.endDate,
         users: state.contract.users,
         contracts: state.contract.contracts,
+        loading: state.contract.loading,
+        error: state.contract.error,
     }
 }
 

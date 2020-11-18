@@ -42,6 +42,12 @@ const GroupManagement = (props: any) => {
         setGroupDescription(props.groupDescription);
     },[props.groupDescription]);
 
+    useEffect(() => {
+        if(props.manager){
+            setManagerName(props.manager.userName);
+        }
+    },[props.manager]);
+
     const addGroupUserByName = (addUserName:string) => {
         props.addGroupUserByName(manageGroupId,addUserName);
         if (props.error) {
@@ -142,9 +148,9 @@ const GroupManagement = (props: any) => {
                 <ManageGroupDialog 
                     dialogOpen = {createGroupdialogOpen}
                     handleDialogClose = {handleCreateGroupDialogClose}
-                    groupName = {groupName}
-                    groupDescription = {groupDescription}
-                    managerName = {managerName} 
+                    groupName = {""}
+                    groupDescription = {""}
+                    managerName = {""} 
                     setGroupName = {setGroupName}
                     setGroupDescription = {setGroupDescription}
                     setManagerName = {setManagerName}
@@ -191,8 +197,11 @@ const mapStateToProps = (state: any) => {
         groupId: state.group.groupId,
         groupName: state.group.groupName,
         groupDescription: state.group.groupDescription,
+        manager: state.group.manager,
         users: state.group.users,
         groups: state.group.groups,
+        loading: state.group.loading,
+        error: state.group.error,
     }
 }
 

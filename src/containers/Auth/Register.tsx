@@ -58,31 +58,31 @@ const Register = (props:any) => {
     let form = (
         <form className={classes.root} noValidate autoComplete="off">
             <div>
-                <TextField
+                <p><TextField
                     required
                     id="outlined-required"
                     label="UserName"
                     value=""
                     variant="outlined"
                     onChange={(event) => { setUserName(event.target.value); }}
-                />
-                <TextField
+                /></p>
+                <p><TextField
                     required
                     id="outlined-required"
                     label="FirstName"
                     value=""
                     variant="outlined"
                     onChange={(event) => { setFirstName(event.target.value); }}
-                />
-                <TextField
+                /></p>
+                <p><TextField
                     required
                     id="outlined-required"
                     label="LastName"
                     value=""
                     variant="outlined"
                     onChange={(event) => { setLastName(event.target.value); }}
-                />
-                <TextField
+                /></p>
+                <p><TextField
                     id="outlined-password-input"
                     label="Password"
                     type="password"
@@ -90,23 +90,23 @@ const Register = (props:any) => {
                     autoComplete="current-password"
                     variant="outlined"
                     onChange={(event) => setPassword(event.target.value)}
-                />
-                <TextField
+                /></p>
+                <p><TextField
                     required
                     id="outlined-required"
                     label="Email"
                     value=""
                     variant="outlined"
                     onChange={(event) => { setEmail(event.target.value); }}
-                />
-                <TextField
+                /></p>
+                <p><TextField
                     required
                     id="outlined-required"
                     label="Phone"
                     value=""
                     variant="outlined"
                     onChange={(event) => { setPhone(event.target.value); }}
-                />
+                /></p>
             </div>
             <Button
                 variant="contained"
@@ -129,7 +129,9 @@ const Register = (props:any) => {
 
     return (
         <Fragment>
-            {form}
+            <div style={{textAlign:"center"}}>
+                {form}
+            </div>
             <CustomizedSnackbars 
                 open = {open}
                 severity = {severity}
