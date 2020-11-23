@@ -24,13 +24,13 @@ const Contract = (props:any) => {
     const [endDate, setEndDate] = useState<Date | null>(
         new Date('2020-10-20T21:11:54'),
     );
-    // const [manageContracts, setManageContracts] = useState([]); 
+    const [manageContracts, setManageContracts] = useState([]); 
     const [contractDialogOpen, setContractDialogOpen] = useState(false);
     const [userDialogOpen, setUserDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [severity, setSeverity] = useState<Severity>(undefined);
     const [text, setText] = useState("");
-
+    
     useEffect(() => {
         props.fetchUserManageContractsById(userId);
         props.fetchUserJoinContractsById(userId);
@@ -58,9 +58,9 @@ const Contract = (props:any) => {
         setEndDate(props.endDate);
     },[props.endDate]);
 
-    // useEffect(() => {
-    //     setManageContracts(props.manageContracts);
-    // },[props.manageContracts]);
+    useEffect(() => {
+        setManageContracts(props.manageContracts);
+    },[props.manageContracts]);
 
 
 
@@ -90,7 +90,7 @@ const Contract = (props:any) => {
     };
 
 
-    const updateContractInformation = () => {
+    const updateContractInformation = async () => {
         props.updateContractInformation(manageContractId, contractName, company, managerName, startDate, endDate);
         if (props.error) {
             setSeverity("error");
@@ -99,9 +99,9 @@ const Contract = (props:any) => {
             setSeverity("success");
             setText("update contract information success");
         }
+        await props.fetchUserManageContractsById(userId);
         setSnackbarOpen(true);
         setContractDialogOpen(false);
-        props.fetchUserManageContractsById(userId);
     }
 
     const handleUserDialogClickOpen = (contractId:number) => {
@@ -136,7 +136,7 @@ const Contract = (props:any) => {
     return (
         <Fragment>
             <ManageContractsTable 
-                manageContracts = {props.manageContracts}
+                manageContracts = {manageContracts}
                 handleContractDialogClickOpen= {handleContractDialogClickOpen}  
                 handleUserDialogClickOpen = {handleUserDialogClickOpen}/>
             <ManageContractDialog 

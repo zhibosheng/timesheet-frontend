@@ -41,6 +41,27 @@ export const fetchTimesheetsByUserAndDate = (userNameList:Array<string>, startDa
         });
     }
 }
+
+
+export const updateTimesheets = (timesheets:Array<any>) => {
+    return (dispatch:any) => {
+        dispatch(fetchTimesheetStart());
+        const url:string = "http://localhost:8080/updateTimesheets";
+        let config = {
+            headers:{'Content-Type': 'application/json; charset=utf-8'}
+        }
+        // let Data = new FormData();
+        // Data.append('data',JSON.stringify(timesheets));
+        axios.post(url,timesheets, config)
+        .then(response => {
+            dispatch(fetchTimesheetsSuccess(response.data));        
+        })
+        .catch(err => {
+            dispatch(fetchTimesheetFail(err.message));
+        });
+    }
+}
+
 export const sendTimesheetEmail = (userNameList:Array<string>, email:string, startDate:Date, endDate: Date) => {
     return (dispatch:any) => {
         dispatch(fetchTimesheetStart());

@@ -93,6 +93,12 @@ export default function PersistentDrawerLeft(props: any) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  let isAdmin = false;
+  for (const role of props.roles){
+    if (role.operation === "admin"){
+      isAdmin = true;
+    }
+  }
   let lists = (
     <Fragment>
       <ListItem button key={"Auth"}>
@@ -143,12 +149,12 @@ export default function PersistentDrawerLeft(props: any) {
             to={"/group"}
         ><ListItemText primary={"Group"} /></NavLink>
           </ListItem>
-          <ListItem button key={"HR Dashboard"}>
+          {isAdmin ? <ListItem button key={"HR Dashboard"}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
             <NavLink 
             to={"/HR"}
         ><ListItemText primary={"HR Dashboard"} /></NavLink>
-          </ListItem>
+          </ListItem> : null}
           <ListItem button key={"Profile"}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
             <NavLink 

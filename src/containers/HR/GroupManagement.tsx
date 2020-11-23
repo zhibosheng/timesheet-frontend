@@ -148,9 +148,9 @@ const GroupManagement = (props: any) => {
                 <ManageGroupDialog 
                     dialogOpen = {createGroupdialogOpen}
                     handleDialogClose = {handleCreateGroupDialogClose}
-                    groupName = {""}
-                    groupDescription = {""}
-                    managerName = {""} 
+                    groupName = {groupName}
+                    groupDescription = {groupDescription}
+                    managerName = {managerName} 
                     setGroupName = {setGroupName}
                     setGroupDescription = {setGroupDescription}
                     setManagerName = {setManagerName}

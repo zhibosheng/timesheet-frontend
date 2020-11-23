@@ -13,6 +13,7 @@ const initialState: Object= {
     avatar:null,
     createTime: null,
     updateTime: null,
+    roles: [],
     manageGroups: [],
     joinGroups: [],
     manageContracts:[],
@@ -52,6 +53,13 @@ const fetchUserAvatarSuccess = (state:any, action:any) => {
     });
 };
 
+const fetchUserRolesSuccess = (state:any, action:any) => {
+    return updateObject( state, {
+        roles: action.roles,
+        error: null,
+        loading: false
+    });
+};
 
 const fetchUserManageGroupsSuccess = (state:any, action:any) => {
     return updateObject( state, {
@@ -117,6 +125,7 @@ const reducer = ( state:any = initialState, action:any ) => {
         case actionTypes.FETCH_USER_AVATAR_SUCCESS: return fetchUserAvatarSuccess(state, action);
         case actionTypes.FETCH_USER_MANAGEGROUPS_SUCCESS: return fetchUserManageGroupsSuccess(state, action);
         case actionTypes.FETCH_USER_JOINGROUPS_SUCCESS: return fetchUserJoinGroupsSuccess(state, action);
+        case actionTypes.FETCH_USER_ROLES_SUCCESS: return fetchUserRolesSuccess(state, action);
         case actionTypes.FETCH_USER_MANAGECONTRACTS_SUCCESS: return fetchUserManageContractsSuccess(state, action);
         case actionTypes.FETCH_USER_JOINCONTRACTS_SUCCESS: return fetchUserJoinContractsSuccess(state, action);
         case actionTypes.FETCH_USER_TIMESHEETS_SUCCESS: return  fetchUserTimesheetsSuccess(state, action);

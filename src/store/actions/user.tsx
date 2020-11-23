@@ -32,6 +32,14 @@ export const fetchUserAvatarSuccess = (url:URL) => {
     };
 };
 
+export const fetchUserRolesSuccess = (roles:any) => {
+    return {
+        type: actionTypes.FETCH_USER_ROLES_SUCCESS,
+        roles: roles,
+    };
+};
+
+
 export const fetchUserManageGroupsSuccess = (manageGroups:any) => {
     return {
         type: actionTypes.FETCH_USER_MANAGEGROUPS_SUCCESS,
@@ -100,7 +108,14 @@ export const fetchUserByName  = (userName:string) => {
                 dispatch(fetchUserAvatarSuccess(res.data.url))
             }).catch(e => {
                 dispatch(fetchUserFail(e.message));
-            });        
+            }); 
+            const roleUrl:string = "http://localhost:8080/user/roles/"+response.data.userId;
+            axios.get(roleUrl)
+            .then(result => {
+                dispatch(fetchUserRolesSuccess(result.data))
+            }).catch(e => {
+                dispatch(fetchUserFail(e.message));
+            });         
         })
         .catch(err => {
             dispatch(fetchUserFail(err.message));

@@ -28,6 +28,7 @@ export const authFail = (error:any) => {
 export const logout = () => {
     localStorage.removeItem('Authorization');
     localStorage.removeItem('expirationDate');
+    localStorage.removeItem('userName');
     return {
         type: actionTypes.AUTH_LOGOUT
     };
@@ -60,6 +61,7 @@ export const auth = (userName:string, password:string) => {
             const expirationDate:Date = new Date(new Date().getTime() + 7200 * 1000);
             localStorage.setItem('Authorization', response.data.Authorization);
             localStorage.setItem('expirationDate', expirationDate.toString());
+            localStorage.setItem('userName', userName);
             dispatch(authSuccess(response.data.Authorization));
             dispatch(checkAuthTimeout(7200));
             dispatch(fetchUserByName(userName));           

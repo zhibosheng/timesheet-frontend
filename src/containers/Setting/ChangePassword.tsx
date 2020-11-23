@@ -108,16 +108,6 @@ const ChangePassword = (props: any) => {
 const mapStateToProps = (state: any) => {
     return {
         userId: state.user.userId,
-        userName: state.user.userName,
-        firstName: state.user.firstName,
-        lastName: state.user.lastName,
-        password: state.user.password,
-        email: state.user.email,
-        phone: state.user.phone,
-        avatarUrl: state.user.avatarUrl,
-        avatar: state.user.avatar,
-        createTime: state.user.createTime,
-        updateTime: state.user.updateTime,
         loading: state.user.loading,
         error: state.user.error,
     }
